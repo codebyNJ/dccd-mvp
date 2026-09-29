@@ -52,3 +52,18 @@ test("Calm mode: motion is reduced (no idle loops) and mute stays on across less
   await page.goto("/lesson/?id=can");
   await expect(page.getByRole("button", { name: "Mute" })).toHaveAttribute("aria-pressed", "true");
 });
+
+for (const reduce of [false, true]) {
+  test(`Idle loops ${reduce ? "stop when the OS asks for reduced motion" : "run with calm mode off"}`, async ({ page }) => {
+    if (reduce) await page.emulateMedia({ reducedMotion: "reduce" });
+    await seed(page, { learners: [learner("l1", "Mira", { calmMode: false })], activeLearnerId: "l1" });
+    await page.goto("/lesson/?id=can&step=practise");
+    await page.getByRole("button", { name: "Bubbles" }).click();
+    await expect(page.locator("button.char-card")).toHaveCount(2);
+    await page.waitForTimeout(1200);
+    const moving = await page
+      .locator("button.char-card > div")
+      .evaluateAll((els) => els.some((e) => /translate|rotate|scale|matrix/.test((e as HTMLElement).style.transform) && !/translate\(0px, 0px\)$/.test((e as HTMLElement).style.transform)));
+    expect(moving).toBe(!reduce);
+  });
+}

@@ -58,6 +58,26 @@ test("Can: Watch, Practise, Check and Reward, with tokens, board-full reward and
   await expect(page.getByRole("img", { name: "Can" })).toBeVisible();
 });
 
+test("Can’t (after Can is mastered): Watch, Practise, Check and Reward with the negated sentences", async ({ page }) => {
+  const mastered = { delayStep: 0, delayGoodSessions: 0, masteryStreak: 2, masteredAt: Date.now(), everMastered: true, lastReviewAt: Date.now(), needsPractice: false, sessionsCompleted: 2 };
+  await seed(page, { learners: [learner("l1", "Mira", {}, { progress: { can: mastered }, stickers: ["can"] })], activeLearnerId: "l1" });
+  await page.goto("/");
+  await page.getByRole("link", { name: /Open Can’t: New/ }).click();
+  await page.getByRole("button", { name: "Swimming fish" }).click();
+  await expect(page.locator(".a-prompt")).toContainText("The baby can’t swim. The swimmer can swim.");
+  for (let i = 0; i < 9; i++) await page.getByRole("button", { name: "Next" }).click();
+  await page.getByRole("button", { name: "Practise" }).click();
+  await answerTrials(page, { trials: 10 });
+  await answerTrials(page, { trials: 10 });
+  // 20 tokens on a board of 5: the last answer fills the board, and its reward plays before the lesson's.
+  await page.getByRole("button", { name: "Keep going" }).click();
+  await expect(page).toHaveURL(/step=reward/);
+  await expect(page.getByText("All done. Great work!")).toBeVisible();
+  const session = (await stored(page)).sessions[0];
+  expect(session).toMatchObject({ lessonId: "cant", completed: true });
+  expect(session.summary?.checkIndependentCorrect).toBe(10);
+});
+
 test("Can’t, least-to-most: a wrong tap gets “Let’s try again”, a full prompt, and is recorded as prompted", async ({ page }) => {
   await seed(page, {
     learners: [learner("l1", "Ravi", { strategy: "least-to-most", canBeforeCant: false })],

@@ -57,6 +57,13 @@ test("Demo data: position-bias flag, plain summary and print report", async ({ p
   await expect(page.getByRole("button", { name: "Print or save as PDF" })).toBeHidden();
   await page.emulateMedia({ media: "screen" });
   await expect(page.getByRole("heading", { name: "Progress report: Asha" })).toBeHidden();
+
+  // As in DEMO_SCRIPT.md: Asha's Can is mastered and due for review, Can't is in progress.
+  await page.getByRole("link", { name: "Back to child view" }).click();
+  await page.getByRole("button", { name: "Asha" }).click();
+  await expect(page.getByRole("link", { name: /Open Can: Review/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Open Can’t: Keep going/ })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Can" })).toBeVisible();
 });
 
 test("CSV import validates rows; Reset to DCCD deck restores the 10 items", async ({ page }) => {
