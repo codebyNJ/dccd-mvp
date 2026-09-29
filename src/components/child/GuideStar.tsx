@@ -31,7 +31,7 @@ export function GuideStar({ lean, calm, size = 72 }: { lean: Side | null; calm: 
   return (
     <motion.div
       aria-hidden
-      className="shrink-0"
+      className="guide-star shrink-0"
       style={{ width: size, height: size }}
       animate={{ rotate: lean === "left" ? -10 : lean === "right" ? 10 : 0, x: lean === "left" ? -4 : lean === "right" ? 4 : 0 }}
       transition={SPRING}

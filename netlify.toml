@@ -1,0 +1,17 @@
+# Static export: Netlify builds with `next build` and serves out/ as plain files.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The voice files and images never change for a given name; cache them long.
+[[headers]]
+  for = "/audio/*.mp3"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

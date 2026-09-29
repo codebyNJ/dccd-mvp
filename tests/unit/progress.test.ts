@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applySession, isLocked, isReviewDue, lessonStatus, nextDelayStep } from "@/lib/progress";
+import { applySession, isLocked, isReviewDue, lessonStars, lessonStatus, nextDelayStep } from "@/lib/progress";
 import { defaultLessons } from "@/lib/lessons";
 import { defaultProgress, defaultSettings, type Learner } from "@/lib/schema";
 
@@ -121,5 +121,17 @@ describe("unlock rule and status", () => {
     const l = learner({ progress: { can: { ...defaultProgress(), everMastered: true, masteredAt: 0, lastReviewAt: 0, sessionsCompleted: 2 } } });
     expect(lessonStatus(can, l, lessons, DAY)).toBe("mastered");
     expect(lessonStatus(can, l, lessons, 8 * DAY)).toBe("review-due");
+  });
+});
+
+describe("library stars", () => {
+  it("one per completed session up to two, three once mastered, never taken away", () => {
+    const p = defaultProgress();
+    expect(lessonStars(p)).toBe(0);
+    expect(lessonStars({ ...p, sessionsCompleted: 1 })).toBe(1);
+    expect(lessonStars({ ...p, sessionsCompleted: 7 })).toBe(2);
+    expect(lessonStars({ ...p, sessionsCompleted: 2, everMastered: true })).toBe(3);
+    // A failed review clears masteredAt but keeps the stars.
+    expect(lessonStars({ ...p, sessionsCompleted: 2, everMastered: true, masteredAt: null, needsPractice: true })).toBe(3);
   });
 });

@@ -8,8 +8,8 @@ import { GrownUpLock } from "@/components/GrownUpLock";
 import { Icon } from "@/components/Icon";
 import { S } from "@/config/strings";
 import { SPRING, TIMING } from "@/config/timing";
-import { lessonStatus, type LessonStatus } from "@/lib/progress";
-import type { Learner, Lesson } from "@/lib/schema";
+import { lessonStars, lessonStatus, type LessonStatus } from "@/lib/progress";
+import { defaultProgress, type Learner, type Lesson } from "@/lib/schema";
 import { useActiveLearner, useApp } from "@/store/app";
 import { Sticker } from "./Sticker";
 
@@ -121,6 +121,7 @@ function Library({ learner }: { learner: Learner }) {
 function LessonCard({ lesson, learner, lessons, now }: { lesson: Lesson; learner: Learner; lessons: Lesson[]; now: number }) {
   const status = lessonStatus(lesson, learner, lessons, now);
   const locked = status === "locked";
+  const stars = lessonStars(learner.progress[lesson.id] ?? defaultProgress());
   const body = (
     <>
       <span className="text-[1.4em] font-semibold">{lesson.title}</span>
@@ -129,7 +130,15 @@ function LessonCard({ lesson, learner, lessons, now }: { lesson: Lesson; learner
         {status === "mastered" && <Icon name="star" />}
         {S.child.status[status]}
       </span>
-      {locked && <span className="text-[0.6em] text-ink-soft">{S.child.lockedHint}</span>}
+      {locked ? (
+        <span className="text-[0.6em] text-ink-soft">{S.child.lockedHint}</span>
+      ) : (
+        <span className="flex gap-1 text-[0.8em]" aria-label={S.child.stars(stars)} role="img">
+          {[0, 1, 2].map((i) => (
+            <Icon key={i} name="star" className={i < stars ? "fill-amber-400 text-amber-600" : "text-line"} />
+          ))}
+        </span>
+      )}
     </>
   );
   if (locked) {
@@ -140,7 +149,7 @@ function LessonCard({ lesson, learner, lessons, now }: { lesson: Lesson; learner
     );
   }
   return (
-    <Link href={`/lesson/?id=${encodeURIComponent(lesson.id)}`} className="child-btn h-full min-h-[180px] w-full flex-col !gap-3" aria-label={`${S.child.open(lesson.title)}: ${S.child.status[status]}`}>
+    <Link href={`/lesson/?id=${encodeURIComponent(lesson.id)}`} className="child-btn h-full min-h-[180px] w-full flex-col !gap-3" aria-label={`${S.child.open(lesson.title)}: ${S.child.status[status]}, ${S.child.stars(stars)}`}>
       {body}
     </Link>
   );

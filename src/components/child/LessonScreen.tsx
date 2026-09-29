@@ -417,14 +417,14 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
             <>
               <button className="child-btn" disabled={watchIndex === 0} aria-disabled={watchIndex === 0} onClick={() => (setSlideDone(false), setWatchIndex((i) => Math.max(0, i - 1)))}>
                 <Icon name="back" />
-                {S.child.back}
+                <span className="ctl-label">{S.child.back}</span>
               </button>
               <button className="child-btn" onClick={() => (setSlideDone(false), setWatchKey((k) => k + 1))}>
                 <Icon name="replay" />
-                {S.child.replay}
+                <span className="ctl-label">{S.child.replay}</span>
               </button>
               <button className="child-btn primary" onClick={nextSlide}>
-                {watchLast ? S.child.startPractise : S.child.next}
+                <span className="ctl-label">{watchLast ? S.child.startPractise : S.child.next}</span>
                 <Icon name="next" />
               </button>
             </>
@@ -432,7 +432,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
           {stage === "reward" && (
             <button className="child-btn primary" onClick={() => (stopSpeech(), router.push("/"))}>
               <Icon name="check" />
-              {S.child.finish}
+              <span className="ctl-label">{S.child.finish}</span>
             </button>
           )}
         </div>

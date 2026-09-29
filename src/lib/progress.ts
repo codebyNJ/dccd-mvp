@@ -93,3 +93,8 @@ export function lessonStatus(lesson: Lesson, learner: Learner, lessons: Lesson[]
   if (p.sessionsCompleted > 0 || p.needsPractice) return "in-progress";
   return "new";
 }
+
+/** Stars on a library card: one per completed session (up to two), three once the lesson has been mastered. Never taken away. */
+export function lessonStars(p: LessonProgress): number {
+  return p.everMastered ? 3 : Math.min(2, p.sessionsCompleted);
+}

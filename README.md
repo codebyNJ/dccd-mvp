@@ -26,6 +26,8 @@ npm run dev          # http://localhost:3000
 
 Playwright needs its browsers once: `npx playwright install chromium webkit`. If a Chromium is already installed elsewhere, point the tests at it with `PW_CHROMIUM_PATH=/path/to/chrome npm run test:e2e -- --project=chromium`.
 
+The end-to-end suite covers the brief's scenarios: a full happy path (a learner created in the grown-up area, reward choice, Watch, Practise with a wrong then a right tap, Check, board-full rewards, mastery after two sessions, Can’t unlocking), errorless at 0 s, a keyboard-only run, reduced motion, breaks, a bad CSV, drafts, export → import, print, and every screen at six widths in portrait and landscape. The layout test saves screenshots to `test-results/screens/`; `node scripts/contact-sheet.mjs` lays them side by side for review.
+
 The end-to-end tests speed the lessons up through `window.__DCCD_TIME_SCALE__` (see `src/config/timing.ts`); it is never set for real users.
 
 ### Where things are
@@ -58,7 +60,9 @@ This writes `public/audio/*.mp3` and `public/audio/manifest.json`; commit both. 
 
 `npm run build` produces a fully static site in `out/`. Upload that folder to any static host:
 
-- **Netlify / Cloudflare Pages / Vercel:** build command `npm run build`, output directory `out`.
+- **Netlify:** connect the repository; `netlify.toml` already sets the build command (`npm run build`), the publish folder (`out`) and Node 22. Or drag the `out/` folder onto Netlify Drop.
+- **Vercel:** import the repository; Vercel detects Next.js and serves the static export. No settings needed.
+- **Cloudflare Pages:** build command `npm run build`, output directory `out`.
 - **GitHub Pages or a plain web server:** copy `out/` to the web root. URLs use trailing slashes (`/lesson/`), so the server must serve `index.html` from directories (all common hosts do). If the site lives under a sub-path, set `basePath` in `next.config.ts`.
 
 Serve it over HTTPS so tablets can add it to the home screen. Each device keeps its own data; use **Backup → Export** to move it.
@@ -106,6 +110,8 @@ Animations use [GSAP](https://gsap.com) (Watch-step timelines, idle loops, the s
 - The CSV import is a paste/upload of a Google Sheet export; in a full build it would sync automatically.
 - Two lessons ship (Can, Can’t) built from DCCD's 10-item deck; answers were inferred from the deck (`src/data/deck.ts`) and should be confirmed by DCCD.
 - English only; all strings are in `src/config/strings.ts` so Kannada and Hindi can be added.
+- **Check audio on a real iPad.** Playwright cannot reproduce iOS audio rules (audio unlocks on the first tap, silent switch, Safari's speech voices), so the tests run with voice off and a silent narration clock. Before a demo, open a lesson on the iPad, tap once, and confirm the voice plays, pauses on Break and stops on Mute.
+- On very short landscape phones (height under 560 px) the Watch step's Back / Replay / Next buttons become a column of icons on the right so the cards keep their width; their words remain as accessible names.
 
 ---
 

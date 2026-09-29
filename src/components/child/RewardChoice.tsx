@@ -13,9 +13,9 @@ export function RewardChoice({ onChoose }: { onChoose: (r: RewardId) => void }) 
   return (
     <div className="flex h-full min-h-0 flex-col gap-[var(--gap)]">
       {/* The guide already says the line above; on short screens the heading gives way to the buttons. */}
-      <h1 className="text-center font-semibold [@media(max-height:560px)]:sr-only">{S.child.chooseReward}</h1>
-      {/* Always one row of three, so nothing wraps under the next choice. */}
-      <ul className="grid min-h-0 flex-1 grid-cols-3 grid-rows-1 gap-[var(--gap)]">
+      <h1 className="text-center font-semibold [@media(max-height:560px)]:sr-only [@media(max-width:420px)]:sr-only">{S.child.chooseReward}</h1>
+      {/* Three across, or three rows on narrow portrait screens (globals.css), so no label runs into the next choice. */}
+      <ul className="reward-grid grid min-h-0 flex-1 gap-[var(--gap)]">
         {REWARDS.map((r, i) => (
           <motion.li
             key={r}

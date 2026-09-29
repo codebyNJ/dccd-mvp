@@ -174,18 +174,97 @@ button:disabled {
 
 /* Short landscape phones: side columns so the cards keep their height. */
 @media (orientation: landscape) and (max-height: 560px) {
+  /*
+   * Break and Mute on the left, step controls on the right, and the schedule,
+   * token board, spoken line and cards down the middle, so the line stays short
+   * and the cards keep their height.
+   */
   .lesson {
-    /* A narrow first column (Break under the schedule) leaves the width to the two cards. */
-    grid-template-columns: minmax(var(--tap-child), 22vw) minmax(0, 1fr) auto;
-    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-columns: var(--tap-child) minmax(0, 1fr) var(--tap-child);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
     grid-template-areas:
-      "schedule tokens mute"
-      "break prompt prompt"
-      "break cards controls";
+      "break schedule controls"
+      "break tokens controls"
+      "mute prompt controls"
+      "mute cards controls";
   }
-  .lesson > .a-schedule { align-self: center; }
-  .lesson > .a-break { align-self: start; }
-  .lesson > .a-controls { flex-direction: column; justify-content: flex-start; }
+  /* No step controls (Practise, Check): the middle takes the right column too. */
+  .lesson:has(> .a-controls:empty) {
+    grid-template-areas:
+      "break schedule schedule"
+      "break tokens tokens"
+      "mute prompt prompt"
+      "mute cards cards";
+  }
+  .lesson > .a-tokens > * { min-height: 0; }
+  /* Watch step (the only one with side controls): the guide has nothing to point at, so its star gives its width to the teach line. */
+  .lesson:has(> .a-controls > *) > .a-prompt > .guide-star { display: none; }
+  .lesson > .a-break > button,
+  .lesson > .a-mute > button { width: 100%; height: 100%; }
+  /* Step controls become a column of icon buttons; the words stay as their accessible names. */
+  .lesson > .a-controls {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    width: var(--tap-child);
+  }
+  .lesson > .a-controls > .child-btn {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    padding: 4px;
+  }
+  .lesson > .a-controls .ctl-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Narrow portrait phones: Watch controls in one row of icon buttons (words stay as accessible names). */
+@media (orientation: portrait) and (max-width: 420px) {
+  .lesson > .a-controls {
+    flex-wrap: nowrap;
+  }
+  .lesson > .a-controls > .child-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .lesson > .a-controls .ctl-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .lesson:has(> .a-controls > *) > .a-prompt > .guide-star {
+    display: none;
+  }
+}
+
+/* Reward choice: three across when there is room, three rows on narrow portrait screens. */
+.reward-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}
+@media (orientation: portrait) and (max-width: 599px) {
+  .reward-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
+  .reward-grid .child-btn {
+    flex-direction: row;
+  }
+  .reward-grid .child-btn svg {
+    max-height: 70%;
+    width: auto;
+    height: 1.6em;
+  }
 }
 
 /* Small phones: slightly tighter targets so everything stays on one screen. */
@@ -196,8 +275,17 @@ button:disabled {
   }
 }
 
+/* The card area is a size container, so the cards can leave room for the prompt's gentle growth. */
+.lesson > .a-cards {
+  container-type: size;
+}
 .cards {
   height: 100%;
+  box-sizing: border-box;
+  /* Room for the prompted card to grow (TIMING.promptGrowScale) and its glow ring, inside the screen. */
+  padding: calc(2.5cqh + 6px) calc(2.5cqw + 6px);
+  align-content: center;
+  align-items: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(128px, 100%), 1fr));
   grid-auto-rows: minmax(0, 1fr);
@@ -208,7 +296,10 @@ button:disabled {
 
 .char-card {
   position: relative;
-  height: 100%;
+  /* Never taller than 5:4, so tall portrait screens don't stretch the cards into strips. */
+  height: auto;
+  aspect-ratio: 4 / 5;
+  max-height: 100%;
   min-height: var(--tap-child);
   width: 100%;
   border-radius: var(--radius-card);

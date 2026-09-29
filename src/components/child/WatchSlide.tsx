@@ -145,7 +145,7 @@ export function WatchSlide({ item, polarity, cantSide, calm, voice, paused, onFi
   return (
     <div ref={scope} className="cards pb-4">
       {[left, right].map((who, i) => (
-        <div key={who} className="watch-card relative h-full min-h-0" style={{ visibility: "hidden" }}>
+        <div key={who} className="watch-card relative flex h-full min-h-0 items-center" style={{ visibility: "hidden" }}>
           <CharacterCard character={who} index={i} state="idle" calm={calm} tappable={false} enter={false}>
             {who === cant && <RoughCircle />}
             {label(who)}
