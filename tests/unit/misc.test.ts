@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { addToken, earnsToken } from "@/lib/tokens";
 import { positionBias } from "@/lib/bias";
-import { instructionLine, praiseLine, teachLine, correctCharacter } from "@/lib/templates";
+import { instructionLine, praiseLine, teachLine, correctCharacter, distractorCharacter } from "@/lib/templates";
 import { deckItems, defaultLessons } from "@/lib/lessons";
 import type { Side, TrialRecord } from "@/lib/schema";
 import { makeDemoData } from "@/lib/demo";
@@ -78,6 +78,9 @@ describe("templates", () => {
   it("the correct pick in a Can lesson is the other character", () => {
     expect(correctCharacter(swim, "cant")).toBe("baby");
     expect(correctCharacter(swim, "can")).toBe("swimmer");
+    // The two cards in a trial are always different characters.
+    expect(distractorCharacter(swim, "can")).toBe("baby");
+    expect(distractorCharacter(swim, "cant")).toBe("swimmer");
     const bark = deckItems()[3];
     expect(praiseLine(bark, "cant", correctCharacter(bark, "cant"))).toBe("Yes! The cat can’t bark.");
   });

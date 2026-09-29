@@ -155,7 +155,7 @@ function TrendChart({ sessions, threshold }: { sessions: Session[]; threshold: n
   const [hover, setHover] = useState<number | null>(null);
   const W = 640;
   const H = 220;
-  const pad = { l: 40, r: 16, t: 12, b: 28 };
+  const pad = { l: 44, r: 36, t: 22, b: 28 };
   const iw = W - pad.l - pad.r;
   const ih = H - pad.t - pad.b;
   const x = (i: number) => pad.l + (pts.length <= 1 ? iw / 2 : (i / (pts.length - 1)) * iw);
@@ -175,7 +175,7 @@ function TrendChart({ sessions, threshold }: { sessions: Session[]; threshold: n
           </g>
         ))}
         <line x1={pad.l} x2={W - pad.r} y1={y(threshold)} y2={y(threshold)} stroke="var(--amber-600)" strokeWidth={1.5} strokeDasharray="6 4" />
-        <text x={W - pad.r} y={y(threshold) - 6} textAnchor="end" fontSize="12" fill="var(--ink-soft)">
+        <text x={pad.l + 6} y={y(threshold) - 6} textAnchor="start" fontSize="12" fill="var(--ink-soft)">
           {S.grownUp.learners.mastery} {threshold}%
         </text>
         {hover !== null && <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={pad.t + ih} stroke="var(--ink-muted)" strokeWidth={1} />}
