@@ -1,26 +1,310 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. Brand colours are muted from dccdglobal.com (#38b6ff blue,
+ * #ff5757 coral). To re-brand, change the values in this :root block only.
+ * Contrast checked: child text pairs ≥ 7:1, adult text ≥ 4.5:1.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page: #e6eff6;
+  --surface: #ffffff;
+  --blue-50: #e3f0f8;
+  --blue-100: #cfe3f1;
+  --blue-300: #8dbfe0;
+  --blue-500: #3a8fc4;
+  --blue-700: #1d5a80;
+  --blue-800: #17496a;
+  --coral-50: #fce6e3;
+  --coral-300: #f0a39c;
+  --coral-500: #e0685f;
+  --coral-600: #b4413a;
+  --coral-ink: #8a2c25;
+  --amber-100: #fbeac0;
+  --amber-400: #f2c14e;
+  --amber-600: #b7832a;
+  --ink: #1b2a38;
+  --ink-soft: #334a5e;
+  --ink-muted: #4f6376;
+  --line: #c3d6e4;
+  --focus: #1d5a80;
+
+  --radius-card: 24px;
+  --radius-control: 20px;
+  --radius-small: 12px;
+
+  /* Child screens: text ≥ 28px, targets ≥ 96px. */
+  --child-text: clamp(28px, 1.1vw + 22px, 44px);
+  --child-text-lg: clamp(32px, 1.3vw + 26px, 52px);
+  --tap-child: 96px;
+  /* Adult screens: text ≥ 16px, targets ≥ 44px. */
+  --tap-adult: 44px;
+
+  --gap: clamp(8px, 1.2vw, 20px);
+  --gutter: 16px;
+  --glow: 0 0 0 5px var(--blue-300), 0 0 28px 6px rgb(58 143 196 / 0.45);
+  --shadow-card: 0 1px 0 rgb(27 42 56 / 0.06), 0 6px 18px rgb(27 42 56 / 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-300: var(--blue-300);
+  --color-blue-500: var(--blue-500);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-coral-50: var(--coral-50);
+  --color-coral-300: var(--coral-300);
+  --color-coral-500: var(--coral-500);
+  --color-coral-600: var(--coral-600);
+  --color-coral-ink: var(--coral-ink);
+  --color-amber-100: var(--amber-100);
+  --color-amber-400: var(--amber-400);
+  --color-amber-600: var(--amber-600);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --font-sans: var(--font-lexend), system-ui, sans-serif;
+  --radius-card: var(--radius-card);
+  --radius-control: var(--radius-control);
+  --radius-small: var(--radius-small);
 }
 
-@media (prefers-color-scheme: dark) {
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--page);
+}
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:disabled {
+  cursor: default;
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ---------- Child screens ---------- */
+
+.child {
+  font-size: var(--child-text);
+  line-height: 1.2;
+  min-height: 100dvh;
+}
+.child.text-large {
+  --child-text: var(--child-text-lg);
+}
+
+.child-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  min-width: var(--tap-child);
+  min-height: var(--tap-child);
+  padding: 8px 16px;
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  border: 2px solid var(--line);
+  font-weight: 500;
+  box-shadow: var(--shadow-card);
+}
+.child-btn.primary {
+  background: var(--blue-700);
+  border-color: var(--blue-700);
+  color: #fff;
+}
+.child-btn svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+
+/* The one lesson layout: identical on every step and every trial. */
+.lesson {
+  height: 100dvh;
+  display: grid;
+  gap: var(--gap);
+  padding: max(8px, env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right))
+    max(8px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "schedule schedule mute"
+    "break tokens tokens"
+    "prompt prompt prompt"
+    "cards cards cards"
+    "controls controls controls";
+  max-width: 1480px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.lesson > .a-schedule { grid-area: schedule; min-width: 0; }
+.lesson > .a-mute { grid-area: mute; }
+.lesson > .a-break { grid-area: break; }
+.lesson > .a-tokens { grid-area: tokens; min-width: 0; }
+.lesson > .a-prompt { grid-area: prompt; min-width: 0; }
+.lesson > .a-cards { grid-area: cards; min-height: 0; min-width: 0; }
+.lesson > .a-controls { grid-area: controls; min-width: 0; }
+.lesson > .a-controls:empty { display: none; }
+
+/* Short landscape phones: side columns so the cards keep their height. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .lesson {
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "schedule tokens mute"
+      "break prompt controls"
+      "break cards controls";
+  }
+  .lesson > .a-schedule { align-self: center; }
+  .lesson > .a-break { align-self: start; }
+  .lesson > .a-controls { flex-direction: column; justify-content: flex-start; }
+}
+
+/* Small phones: slightly tighter targets so everything stays on one screen. */
+@media (max-width: 380px), (max-height: 420px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --tap-child: 84px;
+    --gutter: 12px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.cards {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(128px, 100%), 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: clamp(12px, 2.4vw, 40px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.char-card {
+  position: relative;
+  height: 100%;
+  min-height: var(--tap-child);
+  width: 100%;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-card);
+  padding: clamp(8px, 1.6vw, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.char-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ---------- Adult screens ---------- */
+
+.adult {
+  font-size: 16px;
+}
+.adult-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap-adult);
+  padding: 8px 16px;
+  border-radius: var(--radius-small);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 500;
+}
+.adult-btn:hover {
+  border-color: var(--blue-500);
+}
+.adult-btn.primary {
+  background: var(--blue-700);
+  border-color: var(--blue-700);
+  color: #fff;
+}
+.adult-btn.primary:hover {
+  background: var(--blue-800);
+}
+.adult-btn.danger {
+  color: var(--coral-ink);
+  border-color: var(--coral-300);
+}
+.adult-btn svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.field {
+  min-height: var(--tap-adult);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+  padding: 8px 12px;
+  color: var(--ink);
+  font: inherit;
+}
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--line);
+  padding: clamp(16px, 2.4vw, 28px);
+}
+
+/* ---------- Print: the progress report only ---------- */
+
+.print-only {
+  display: none;
+}
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .panel {
+    border: 1px solid #999;
+    break-inside: avoid;
+  }
+  * {
+    box-shadow: none !important;
+  }
 }
