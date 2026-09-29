@@ -87,7 +87,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
   // Snapshot at the start: edits made mid-lesson never change a running session.
   const [items] = useState(() => teachableItems(lesson));
   const itemMap = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
-  const [kind] = useState(() => (lessonStatus(lesson, learner, lessons, Date.now()) === "review-due" ? "review" : "lesson"));
+  const [kind] = useState<Session["kind"]>(() => (lessonStatus(lesson, learner, lessons, Date.now()) === "review-due" ? "review" : "lesson"));
   const [priorSessions] = useState(
     () => useApp.getState().sessions.filter((x) => x.learnerId === learner.id && x.lessonId === lesson.id).length,
   );
@@ -112,7 +112,8 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
   const [missed, setMissed] = useState<PlannedTrial[]>([]);
   const [result, setResult] = useState<FinishResult | null>(null);
   const [promptLine, setPromptLine] = useState<string>(VOICE.chooseReward);
-  const practiseDone = useRef(false);
+  const [delaySeconds, setDelaySeconds] = useState(0);
+  const [practiseDone, setPractiseDone] = useState(false);
 
   const persist = useCallback(() => session.current && saveSession({ ...session.current }), [saveSession]);
 
@@ -162,7 +163,9 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
     preloadLines(
       items.flatMap((i) => [instructionLine(i, lesson.polarity), teachLine(i, lesson.polarity), praiseLine(i, lesson.polarity, correctCharacter(i, lesson.polarity))]).concat(Object.values(VOICE)),
     );
+    setDelaySeconds(session.current.delaySeconds);
     setReward(r);
+    setPromptLine(VOICE.scheduleWatch);
     const wanted = startStep === "practise" || startStep === "check" ? startStep : "watch";
     setStage(kind === "review" ? "check" : wanted);
   };
@@ -170,7 +173,6 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
   // Watch: say the schedule line, then start the slides.
   useEffect(() => {
     if (stage !== "watch" || watchReady) return;
-    setPromptLine(VOICE.scheduleWatch);
     const s = speak(VOICE.scheduleWatch, voice);
     void s.done.then(() => setWatchReady(true));
     return () => s.stop();
@@ -226,7 +228,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
     const s = session.current;
     if (!s) return;
     session.current = { ...s, completed: true };
-    const r = finishSession(session.current, { practiseCompleted: practiseDone.current });
+    const r = finishSession(session.current, { practiseCompleted: practiseDone });
     setResult(r);
     const wrong = new Set(s.trials.filter((t) => (t.step === "check" || t.step === "review") && !t.correct).map((t) => t.itemId));
     if (kind === "lesson" && wrong.size > 0) {
@@ -251,7 +253,6 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
 
   useEffect(() => {
     if (stage !== "reward") return;
-    setPromptLine(result?.becameMastered ? VOICE.newSticker : VOICE.allDone);
     let alive = true;
     const s = speak(VOICE.scheduleReward, voice);
     void s.done.then(() => alive && speak(result?.becameMastered ? VOICE.newSticker : VOICE.allDone, voice));
@@ -283,7 +284,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
     const s = session.current;
     if (s && s.endedAt === null) {
       if (s.completed) goReward();
-      else finishSession(s, { practiseCompleted: practiseDone.current });
+      else finishSession(s, { practiseCompleted: practiseDone });
     }
     router.push("/");
   };
@@ -310,7 +311,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
     items: itemMap,
     polarity: lesson.polarity,
     strategy: settings.strategy,
-    delaySeconds: session.current?.delaySeconds ?? 0,
+    delaySeconds,
     pauseMs: settings.interTrialPauseMs,
     calm,
     voice,
@@ -337,7 +338,7 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
         </div>
 
         {stage === "practise" && plans && (
-          <TrialStep key="practise" step="practise" plan={plans.practise} intro={VOICE.schedulePractise} {...trialCommon} onDone={() => ((practiseDone.current = true), setStage("check"))} />
+          <TrialStep key="practise" step="practise" plan={plans.practise} intro={VOICE.schedulePractise} {...trialCommon} onDone={() => (setPractiseDone(true), setStage("check"))} />
         )}
         {stage === "check" && plans && (
           <TrialStep key="check" step={kind === "review" ? "review" : "check"} plan={plans.check} intro={VOICE.scheduleCheck} {...trialCommon} onDone={finishCheck} />
@@ -348,7 +349,17 @@ function LessonRun({ learner, lesson, lessons, startStep }: { learner: Learner; 
           <div className="a-prompt flex min-h-[1.3em] items-center gap-3">
             <GuideStar lean={null} calm={calm} size={64} />
             <div className="min-w-0 flex-1" aria-hidden>
-              <ReadAlong text={stage === "watch" && watchItem && watchReady ? teachLine(watchItem, lesson.polarity) : promptLine} />
+              <ReadAlong
+                text={
+                  stage === "watch" && watchItem && watchReady
+                    ? teachLine(watchItem, lesson.polarity)
+                    : stage === "reward"
+                      ? result?.becameMastered
+                        ? VOICE.newSticker
+                        : VOICE.allDone
+                      : promptLine
+                }
+              />
             </div>
           </div>
         )}

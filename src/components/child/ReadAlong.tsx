@@ -12,16 +12,14 @@ import { CANT } from "@/lib/templates";
  */
 export function ReadAlong({ text, className = "", id }: { text: string; className?: string; id?: string }) {
   const speech = useSpeech((s) => (s.current?.text === text ? s.current : null));
-  const [active, setActive] = useState(-1);
+  const [tracked, setTracked] = useState<{ speech: typeof speech; index: number }>({ speech: null, index: -1 });
+  const active = speech && tracked.speech === speech ? tracked.index : -1;
 
   useEffect(() => {
-    if (!speech) {
-      setActive(-1);
-      return;
-    }
+    if (!speech) return;
     let raf = 0;
     const tick = () => {
-      setActive(activeWordIndex(speech.words, speech.position()));
+      setTracked({ speech, index: activeWordIndex(speech.words, speech.position()) });
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

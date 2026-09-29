@@ -201,9 +201,10 @@ export function TrialStep(p: Props) {
       timers.forEach(clearTimeout);
       stopSpeech();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- props are read through a ref; only the trial index and break state restart the flow
   }, [index, p.paused]);
 
+  // Called only from a card's click handler.
+  // eslint-disable-next-line react-hooks/purity
   const onTap = (side: Side) => emit.current?.({ kind: "tap", side, at: performance.now() });
 
   const stateFor = (side: Side): CardState => {
@@ -247,6 +248,7 @@ export function TrialStep(p: Props) {
                       state={stateFor(side)}
                       calm={p.calm}
                       tappable={tappable}
+                      // eslint-disable-next-line react-hooks/refs -- click handler, not render
                       onTap={() => onTap(side)}
                       showHand={full && side === planned.correctSide}
                       tokenSlot={p.flyingToken?.side === side ? p.flyingToken.slot : null}
