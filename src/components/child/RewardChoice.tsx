@@ -12,8 +12,10 @@ const REWARDS: RewardId[] = ["bubbles", "stars", "fish"];
 export function RewardChoice({ onChoose }: { onChoose: (r: RewardId) => void }) {
   return (
     <div className="flex h-full min-h-0 flex-col gap-[var(--gap)]">
-      <h1 className="text-center font-semibold">{S.child.chooseReward}</h1>
-      <ul className="grid min-h-0 flex-1 grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-[var(--gap)]">
+      {/* The guide already says the line above; on short screens the heading gives way to the buttons. */}
+      <h1 className="text-center font-semibold [@media(max-height:560px)]:sr-only">{S.child.chooseReward}</h1>
+      {/* Always one row of three, so nothing wraps under the next choice. */}
+      <ul className="grid min-h-0 flex-1 grid-cols-3 grid-rows-1 gap-[var(--gap)]">
         {REWARDS.map((r, i) => (
           <motion.li
             key={r}
@@ -24,7 +26,7 @@ export function RewardChoice({ onChoose }: { onChoose: (r: RewardId) => void }) 
           >
             <motion.button
               whileTap={{ scale: 0.97 }}
-              className="child-btn h-full w-full flex-col !gap-3"
+              className="child-btn h-full w-full !min-w-0 flex-col !gap-3 !px-1 text-center leading-tight"
               onClick={() => onChoose(r)}
             >
               <RewardIcon reward={r} className="h-auto max-h-[40%] w-[min(40%,160px)]" />

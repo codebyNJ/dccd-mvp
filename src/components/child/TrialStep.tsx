@@ -6,7 +6,7 @@ import { VOICE } from "@/config/strings";
 import { TIMING, timeScale } from "@/config/timing";
 import type { PlannedTrial } from "@/lib/counterbalance";
 import type { Item, Polarity, Side, Strategy, TrialRecord, TrialStep as StepName } from "@/lib/schema";
-import { correctCharacter, instructionLine, otherCharacter, praiseLine } from "@/lib/templates";
+import { correctCharacter, distractorCharacter, instructionLine, praiseLine } from "@/lib/templates";
 import { promptDelayMs, reduceTrial, startTrial, usesPrompts, type TrialEvent, type TrialState } from "@/lib/trial";
 import { speak, stopSpeech, type SpeakOptions } from "@/lib/voice";
 import { CharacterCard, type CardState } from "./CharacterCard";
@@ -157,7 +157,7 @@ export function TrialStep(p: Props) {
       P.onRecord(record);
 
       if (st.phase === "correct") {
-        const picked = ev.side === planned.correctSide ? correctCharacter(item, P.polarity) : otherCharacter(item);
+        const picked = ev.side === planned.correctSide ? correctCharacter(item, P.polarity) : distractorCharacter(item, P.polarity);
         const praise = say(praiseLine(item, P.polarity, picked));
         await Promise.all([praise.done, P.onCorrect(record)]).then(guard);
       } else if (st.phase === "retry") {
@@ -201,9 +201,10 @@ export function TrialStep(p: Props) {
       timers.forEach(clearTimeout);
       stopSpeech();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- props are read through a ref; only the trial index and break state restart the flow
   }, [index, p.paused]);
 
+  // Called only from a card's click handler.
+  // eslint-disable-next-line react-hooks/purity
   const onTap = (side: Side) => emit.current?.({ kind: "tap", side, at: performance.now() });
 
   const stateFor = (side: Side): CardState => {
@@ -221,7 +222,7 @@ export function TrialStep(p: Props) {
 
   const full = trial?.promptLevel === 3 && usesPrompts(trial.step) && (trial.phase === "presenting" || trial.phase === "awaiting");
   const who = (side: Side) =>
-    item && planned ? (side === planned.correctSide ? correctCharacter(item, p.polarity) : otherCharacter(item)) : null;
+    item && planned ? (side === planned.correctSide ? correctCharacter(item, p.polarity) : distractorCharacter(item, p.polarity)) : null;
 
   return (
     <>
@@ -247,6 +248,7 @@ export function TrialStep(p: Props) {
                       state={stateFor(side)}
                       calm={p.calm}
                       tappable={tappable}
+                      // eslint-disable-next-line react-hooks/refs -- click handler, not render
                       onTap={() => onTap(side)}
                       showHand={full && side === planned.correctSide}
                       tokenSlot={p.flyingToken?.side === side ? p.flyingToken.slot : null}

@@ -11,6 +11,11 @@ export function correctCharacter(item: Item, polarity: Polarity): CharacterId {
   return polarity === "cant" ? item.answer : otherCharacter(item);
 }
 
+/** The other card in a trial: the one the child should not pick. */
+export function distractorCharacter(item: Item, polarity: Polarity): CharacterId {
+  return polarity === "cant" ? otherCharacter(item) : item.answer;
+}
+
 /** The character who CAN do the verb. */
 export function otherCharacter(item: Item): CharacterId {
   return item.answer === item.optionA ? item.optionB : item.optionA;

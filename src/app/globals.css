@@ -175,10 +175,12 @@ button:disabled {
 /* Short landscape phones: side columns so the cards keep their height. */
 @media (orientation: landscape) and (max-height: 560px) {
   .lesson {
+    /* A narrow first column (Break under the schedule) leaves the width to the two cards. */
+    grid-template-columns: minmax(var(--tap-child), 22vw) minmax(0, 1fr) auto;
     grid-template-rows: auto auto minmax(0, 1fr);
     grid-template-areas:
       "schedule tokens mute"
-      "break prompt controls"
+      "break prompt prompt"
       "break cards controls";
   }
   .lesson > .a-schedule { align-self: center; }
