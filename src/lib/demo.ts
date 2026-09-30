@@ -127,7 +127,7 @@ export function makeDemoData(lessons: Lesson[], now: number): { learners: Learne
     avatar: "kite",
     createdAt: now - 20 * DAY,
     demo: true,
-    settings: { ...defaultSettings(), strategy: "least-to-most", tokenBoardSize: 3 },
+    settings: { ...defaultSettings(), strategy: "least-to-most" },
     progress: {},
     stickers: [],
     assigned: lessons.map((l) => l.id),

@@ -1,7 +1,10 @@
 "use client";
 
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import rough from "roughjs";
+import { TIMING } from "@/config/timing";
 
 const generator = rough.generator();
 
@@ -23,12 +26,14 @@ export function roughStarPaths(size: number, seed = 11): string[] {
 }
 
 /**
- * The circle drawn around the character who can't. Paths are generated in
- * the card's pixel size (re-generated on resize with the same seed), and
- * GSAP DrawSVGPlugin draws them via the `.rough-stroke` class.
+ * The hand-drawn circle around a picture. It stays hidden until `show`
+ * (after the child taps), then draws itself with DrawSVGPlugin; in calm mode
+ * or under reduced motion it simply appears. Paths are generated in the
+ * card's pixel size (re-generated on resize with the same seed).
  */
-export const RoughCircle = forwardRef<SVGSVGElement, { className?: string }>(function RoughCircle({ className }, ref) {
+export function RoughCircle({ show, calm, color }: { show: boolean; calm: boolean; color: string }) {
   const box = useRef<HTMLDivElement>(null);
+  const svg = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
 
   useEffect(() => {
@@ -43,16 +48,45 @@ export const RoughCircle = forwardRef<SVGSVGElement, { className?: string }>(fun
   }, []);
 
   const paths = useMemo(() => (size ? roughEllipsePaths(size.w, size.h) : []), [size]);
+  const drawn = useRef(false);
+
+  useGSAP(
+    () => {
+      const el = svg.current;
+      if (!el) return;
+      if (!show) {
+        drawn.current = false;
+        gsap.set(el, { autoAlpha: 0 });
+        return;
+      }
+      gsap.set(el, { autoAlpha: 1 });
+      // A resize after drawing just re-shows the finished circle.
+      if (drawn.current) return;
+      drawn.current = true;
+      const mm = gsap.matchMedia();
+      mm.add({ reduce: "(prefers-reduced-motion: reduce)", ok: "(prefers-reduced-motion: no-preference)" }, (ctx) => {
+        if (calm || ctx.conditions?.reduce) gsap.set(".rough-stroke", { drawSVG: "100%" });
+        else
+          gsap.fromTo(
+            ".rough-stroke",
+            { drawSVG: "0% live" },
+            { drawSVG: "100% live", duration: TIMING.circleDraw, stagger: TIMING.circleDraw * 0.35, ease: "power1.inOut" },
+          );
+      });
+      return () => mm.revert();
+    },
+    { scope: box, dependencies: [show, calm, paths] },
+  );
 
   return (
-    <div ref={box} className={`pointer-events-none absolute -inset-[6%] ${className ?? ""}`} aria-hidden>
+    <div ref={box} className="pointer-events-none absolute -inset-[6%] z-10" aria-hidden>
       {size && (
-        <svg ref={ref} width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`} className="rough-circle overflow-visible" style={{ visibility: "hidden" }}>
+        <svg ref={svg} width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`} className="rough-circle overflow-visible" style={{ visibility: "hidden" }}>
           {paths.map((d, i) => (
-            <path key={i} d={d} className="rough-stroke" fill="none" stroke="var(--coral-500)" strokeWidth={5} strokeLinecap="round" />
+            <path key={i} d={d} className="rough-stroke" fill="none" stroke={color} strokeWidth={5} strokeLinecap="round" />
           ))}
         </svg>
       )}
     </div>
   );
-});
+}

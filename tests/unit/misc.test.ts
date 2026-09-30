@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { addToken, earnsToken } from "@/lib/tokens";
 import { positionBias } from "@/lib/bias";
 import { instructionLine, praiseLine, teachLine, correctCharacter, distractorCharacter } from "@/lib/templates";
 import { deckItems, defaultLessons } from "@/lib/lessons";
@@ -18,22 +17,6 @@ const rec = (over: Partial<TrialRecord>): TrialRecord => ({
   latencyMs: 1000,
   at: 0,
   ...over,
-});
-
-describe("tokens", () => {
-  it("independent correct always earns; prompted depends on the setting; errors never", () => {
-    expect(earnsToken(rec({}), false)).toBe(true);
-    expect(earnsToken(rec({ promptLevel: 3 }), false)).toBe(false);
-    expect(earnsToken(rec({ promptLevel: 3 }), true)).toBe(true);
-    expect(earnsToken(rec({ correction: true, promptLevel: 3 }), false)).toBe(false);
-    expect(earnsToken(rec({ correct: false }), true)).toBe(false);
-  });
-
-  it("fills the board at its size", () => {
-    expect(addToken(3, 5)).toEqual({ filled: 4, full: false });
-    expect(addToken(4, 5)).toEqual({ filled: 5, full: true });
-    expect(addToken(2, 3)).toEqual({ filled: 3, full: true });
-  });
 });
 
 describe("position bias", () => {
@@ -111,7 +94,7 @@ describe("demo data and plain summary", () => {
     expect(text).toMatch(/who can’t roar/);
   });
 
-  it("Kabir has not mastered Can, so Can't stays locked for him", () => {
+  it("Kabir has not mastered Can", () => {
     const kabir = demo.learners.find((l) => l.id === "demo-kabir")!;
     expect(kabir.progress.can.everMastered).toBe(false);
   });

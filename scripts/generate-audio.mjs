@@ -2,7 +2,7 @@
 /**
  * Pre-generate every spoken line with ElevenLabs, plus word timings for read-along.
  *
- *   ELEVENLABS_API_KEY=… ELEVENLABS_VOICE_ID=… npm run audio
+ *   npm run audio        (reads ELEVENLABS_API_KEY from .env.local)
  *
  * Writes public/audio/<hash>.mp3 and public/audio/manifest.json. Lines already in the
  * manifest with the same text and voice are skipped, so re-running only fetches new lines.
@@ -23,7 +23,8 @@ const dry = args.has("--dry-run");
 const force = args.has("--force");
 
 const key = process.env.ELEVENLABS_API_KEY;
-const voice = process.env.ELEVENLABS_VOICE_ID;
+// Lily: a soft, velvety British voice. Override with ELEVENLABS_VOICE_ID.
+const voice = process.env.ELEVENLABS_VOICE_ID ?? "pFZP5JQG7iQjIQuC4Bku";
 const model = process.env.ELEVENLABS_MODEL ?? "eleven_multilingual_v2";
 
 const lines = allVoiceLines();
@@ -32,8 +33,8 @@ if (dry) {
   console.log(`\n${lines.length} lines.`);
   process.exit(0);
 }
-if (!key || !voice) {
-  console.error("Set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID (see README → Generating audio).");
+if (!key) {
+  console.error("Set ELEVENLABS_API_KEY in .env.local (see README → Generating audio).");
   process.exit(1);
 }
 
@@ -46,7 +47,10 @@ try {
   /* first run */
 }
 
-const fileFor = (text) => `${createHash("sha1").update(`${voice}:${model}:${text}`).digest("hex").slice(0, 12)}.mp3`;
+// Slow, soft and calm: high stability, no style exaggeration, 0.8× speaking speed.
+// The app's Slower / Normal / Faster setting changes playback rate on top of this.
+const settings = { stability: 0.85, similarity_boost: 0.7, style: 0, use_speaker_boost: false, speed: 0.8 };
+const fileFor = (text) => `${createHash("sha1").update(`${voice}:${model}:${JSON.stringify(settings)}:${text}`).digest("hex").slice(0, 12)}.mp3`;
 
 let made = 0;
 let kept = 0;
@@ -63,8 +67,7 @@ for (const text of lines) {
     body: JSON.stringify({
       text,
       model_id: model,
-      // Calm, even delivery for young learners.
-      voice_settings: { stability: 0.7, similarity_boost: 0.75, style: 0, speed: 0.9 },
+      voice_settings: settings,
     }),
   });
   if (!res.ok) {

@@ -1,1 +1,2527 @@
-{ "lines": {} }
+{
+  "voice": "pFZP5JQG7iQjIQuC4Bku",
+  "lines": {
+    "let's read together.": {
+      "text": "Let’s read together.",
+      "file": "d7ef10ee1a66.mp3",
+      "duration": 1.579,
+      "words": [
+        {
+          "word": "Let’s",
+          "start": 0.058,
+          "end": 0.348
+        },
+        {
+          "word": "read",
+          "start": 0.406,
+          "end": 0.615
+        },
+        {
+          "word": "together.",
+          "start": 0.662,
+          "end": 1.3
+        }
+      ]
+    },
+    "let's look again.": {
+      "text": "Let’s look again.",
+      "file": "8258a7a5eb76.mp3",
+      "duration": 1.486,
+      "words": [
+        {
+          "word": "Let’s",
+          "start": 0.07,
+          "end": 0.348
+        },
+        {
+          "word": "look",
+          "start": 0.395,
+          "end": 0.592
+        },
+        {
+          "word": "again.",
+          "start": 0.65,
+          "end": 1.207
+        }
+      ]
+    },
+    "let's try another.": {
+      "text": "Let’s try another.",
+      "file": "77caa6a2ab77.mp3",
+      "duration": 1.579,
+      "words": [
+        {
+          "word": "Let’s",
+          "start": 0.058,
+          "end": 0.36
+        },
+        {
+          "word": "try",
+          "start": 0.418,
+          "end": 0.673
+        },
+        {
+          "word": "another.",
+          "start": 0.743,
+          "end": 1.265
+        }
+      ]
+    },
+    "now, show me.": {
+      "text": "Now, show me.",
+      "file": "85bfd2e61878.mp3",
+      "duration": 1.207,
+      "words": [
+        {
+          "word": "Now,",
+          "start": 0.07,
+          "end": 0.29
+        },
+        {
+          "word": "show",
+          "start": 0.313,
+          "end": 0.546
+        },
+        {
+          "word": "me.",
+          "start": 0.639,
+          "end": 0.906
+        }
+      ]
+    },
+    "the end. great reading!": {
+      "text": "The end. Great reading!",
+      "file": "d548ca5f8778.mp3",
+      "duration": 1.95,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.209
+        },
+        {
+          "word": "end.",
+          "start": 0.302,
+          "end": 0.673
+        },
+        {
+          "word": "Great",
+          "start": 0.813,
+          "end": 1.115
+        },
+        {
+          "word": "reading!",
+          "start": 1.173,
+          "end": 1.637
+        }
+      ]
+    },
+    "you earned a sticker!": {
+      "text": "You earned a sticker!",
+      "file": "07f21e8eb1d7.mp3",
+      "duration": 1.765,
+      "words": [
+        {
+          "word": "You",
+          "start": 0.058,
+          "end": 0.221
+        },
+        {
+          "word": "earned",
+          "start": 0.36,
+          "end": 0.673
+        },
+        {
+          "word": "a",
+          "start": 0.72,
+          "end": 0.766
+        },
+        {
+          "word": "sticker!",
+          "start": 0.836,
+          "end": 1.463
+        }
+      ]
+    },
+    "who can swim?": {
+      "text": "Who can swim?",
+      "file": "7e33e9ed821f.mp3",
+      "duration": 1.44,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.267
+        },
+        {
+          "word": "can",
+          "start": 0.337,
+          "end": 0.511
+        },
+        {
+          "word": "swim?",
+          "start": 0.58,
+          "end": 1.115
+        }
+      ]
+    },
+    "the swimmer can swim. the baby can't swim.": {
+      "text": "The swimmer can swim. The baby can’t swim.",
+      "file": "f628fba83458.mp3",
+      "duration": 3.483,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.209
+        },
+        {
+          "word": "swimmer",
+          "start": 0.267,
+          "end": 0.627
+        },
+        {
+          "word": "can",
+          "start": 0.673,
+          "end": 0.836
+        },
+        {
+          "word": "swim.",
+          "start": 0.906,
+          "end": 1.463
+        },
+        {
+          "word": "The",
+          "start": 1.683,
+          "end": 1.823
+        },
+        {
+          "word": "baby",
+          "start": 1.892,
+          "end": 2.218
+        },
+        {
+          "word": "can’t",
+          "start": 2.287,
+          "end": 2.612
+        },
+        {
+          "word": "swim.",
+          "start": 2.67,
+          "end": 3.181
+        }
+      ]
+    },
+    "yes! the swimmer can swim.": {
+      "text": "Yes! The swimmer can swim.",
+      "file": "8df421d0f8e1.mp3",
+      "duration": 2.09,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.441
+        },
+        {
+          "word": "The",
+          "start": 0.464,
+          "end": 0.58
+        },
+        {
+          "word": "swimmer",
+          "start": 0.639,
+          "end": 0.975
+        },
+        {
+          "word": "can",
+          "start": 1.022,
+          "end": 1.184
+        },
+        {
+          "word": "swim.",
+          "start": 1.277,
+          "end": 1.834
+        }
+      ]
+    },
+    "who can't swim?": {
+      "text": "Who can’t swim?",
+      "file": "219879ce306e.mp3",
+      "duration": 1.579,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.267
+        },
+        {
+          "word": "can’t",
+          "start": 0.337,
+          "end": 0.662
+        },
+        {
+          "word": "swim?",
+          "start": 0.72,
+          "end": 1.254
+        }
+      ]
+    },
+    "the baby can't swim. the swimmer can swim.": {
+      "text": "The baby can’t swim. The swimmer can swim.",
+      "file": "28fa42ab08b9.mp3",
+      "duration": 2.972,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "baby",
+          "start": 0.255,
+          "end": 0.546
+        },
+        {
+          "word": "can’t",
+          "start": 0.604,
+          "end": 0.894
+        },
+        {
+          "word": "swim.",
+          "start": 0.94,
+          "end": 1.335
+        },
+        {
+          "word": "The",
+          "start": 1.358,
+          "end": 1.474
+        },
+        {
+          "word": "swimmer",
+          "start": 1.533,
+          "end": 1.869
+        },
+        {
+          "word": "can",
+          "start": 1.916,
+          "end": 2.078
+        },
+        {
+          "word": "swim.",
+          "start": 2.148,
+          "end": 2.67
+        }
+      ]
+    },
+    "yes! the baby can't swim.": {
+      "text": "Yes! The baby can’t swim.",
+      "file": "6f56b0bfcf73.mp3",
+      "duration": 1.997,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.372
+        },
+        {
+          "word": "The",
+          "start": 0.395,
+          "end": 0.464
+        },
+        {
+          "word": "baby",
+          "start": 0.522,
+          "end": 0.789
+        },
+        {
+          "word": "can’t",
+          "start": 0.836,
+          "end": 1.138
+        },
+        {
+          "word": "swim.",
+          "start": 1.196,
+          "end": 1.718
+        }
+      ]
+    },
+    "who can walk?": {
+      "text": "Who can walk?",
+      "file": "049d1e80b56d.mp3",
+      "duration": 1.393,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.464
+        },
+        {
+          "word": "walk?",
+          "start": 0.557,
+          "end": 1.103
+        }
+      ]
+    },
+    "the dog can walk. the snake can't walk.": {
+      "text": "The dog can walk. The snake can’t walk.",
+      "file": "6e8f7a539dea.mp3",
+      "duration": 2.833,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "dog",
+          "start": 0.255,
+          "end": 0.488
+        },
+        {
+          "word": "can",
+          "start": 0.546,
+          "end": 0.697
+        },
+        {
+          "word": "walk.",
+          "start": 0.789,
+          "end": 1.115
+        },
+        {
+          "word": "The",
+          "start": 1.138,
+          "end": 1.207
+        },
+        {
+          "word": "snake",
+          "start": 1.265,
+          "end": 1.649
+        },
+        {
+          "word": "can’t",
+          "start": 1.695,
+          "end": 2.009
+        },
+        {
+          "word": "walk.",
+          "start": 2.067,
+          "end": 2.531
+        }
+      ]
+    },
+    "yes! the dog can walk.": {
+      "text": "Yes! The dog can walk.",
+      "file": "1c9cc165eced.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.43
+        },
+        {
+          "word": "The",
+          "start": 0.476,
+          "end": 0.546
+        },
+        {
+          "word": "dog",
+          "start": 0.604,
+          "end": 0.813
+        },
+        {
+          "word": "can",
+          "start": 0.871,
+          "end": 1.033
+        },
+        {
+          "word": "walk.",
+          "start": 1.103,
+          "end": 1.649
+        }
+      ]
+    },
+    "who can't walk?": {
+      "text": "Who can’t walk?",
+      "file": "5e73c943bdb1.mp3",
+      "duration": 1.44,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.313,
+          "end": 0.615
+        },
+        {
+          "word": "walk?",
+          "start": 0.673,
+          "end": 1.184
+        }
+      ]
+    },
+    "the snake can't walk. the dog can walk.": {
+      "text": "The snake can’t walk. The dog can walk.",
+      "file": "bb4eae6b51d7.mp3",
+      "duration": 2.972,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.221
+        },
+        {
+          "word": "snake",
+          "start": 0.279,
+          "end": 0.673
+        },
+        {
+          "word": "can’t",
+          "start": 0.72,
+          "end": 1.022
+        },
+        {
+          "word": "walk.",
+          "start": 1.08,
+          "end": 1.463
+        },
+        {
+          "word": "The",
+          "start": 1.486,
+          "end": 1.614
+        },
+        {
+          "word": "dog",
+          "start": 1.683,
+          "end": 1.95
+        },
+        {
+          "word": "can",
+          "start": 2.02,
+          "end": 2.183
+        },
+        {
+          "word": "walk.",
+          "start": 2.276,
+          "end": 2.798
+        }
+      ]
+    },
+    "yes! the snake can't walk.": {
+      "text": "Yes! The snake can’t walk.",
+      "file": "8106c1a8cc3b.mp3",
+      "duration": 2.043,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.43
+        },
+        {
+          "word": "The",
+          "start": 0.453,
+          "end": 0.546
+        },
+        {
+          "word": "snake",
+          "start": 0.604,
+          "end": 0.975
+        },
+        {
+          "word": "can’t",
+          "start": 1.022,
+          "end": 1.324
+        },
+        {
+          "word": "walk.",
+          "start": 1.382,
+          "end": 1.904
+        }
+      ]
+    },
+    "who can fly?": {
+      "text": "Who can fly?",
+      "file": "8cd1a7aad240.mp3",
+      "duration": 1.3,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "fly?",
+          "start": 0.522,
+          "end": 1.045
+        }
+      ]
+    },
+    "the bird can fly. the snake can't fly.": {
+      "text": "The bird can fly. The snake can’t fly.",
+      "file": "2b8c829a9598.mp3",
+      "duration": 3.344,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "bird",
+          "start": 0.255,
+          "end": 0.522
+        },
+        {
+          "word": "can",
+          "start": 0.58,
+          "end": 0.731
+        },
+        {
+          "word": "fly.",
+          "start": 0.801,
+          "end": 1.312
+        },
+        {
+          "word": "The",
+          "start": 1.405,
+          "end": 1.567
+        },
+        {
+          "word": "snake",
+          "start": 1.625,
+          "end": 2.078
+        },
+        {
+          "word": "can’t",
+          "start": 2.136,
+          "end": 2.461
+        },
+        {
+          "word": "fly.",
+          "start": 2.519,
+          "end": 3.042
+        }
+      ]
+    },
+    "yes! the bird can fly.": {
+      "text": "Yes! The bird can fly.",
+      "file": "de3f2de0f109.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.43
+        },
+        {
+          "word": "The",
+          "start": 0.453,
+          "end": 0.546
+        },
+        {
+          "word": "bird",
+          "start": 0.604,
+          "end": 0.848
+        },
+        {
+          "word": "can",
+          "start": 0.906,
+          "end": 1.057
+        },
+        {
+          "word": "fly.",
+          "start": 1.126,
+          "end": 1.649
+        }
+      ]
+    },
+    "who can't fly?": {
+      "text": "Who can’t fly?",
+      "file": "43bce8ce1b0e.mp3",
+      "duration": 1.486,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.302,
+          "end": 0.604
+        },
+        {
+          "word": "fly?",
+          "start": 0.662,
+          "end": 1.196
+        }
+      ]
+    },
+    "the snake can't fly. the bird can fly.": {
+      "text": "The snake can’t fly. The bird can fly.",
+      "file": "fb47c8afcb75.mp3",
+      "duration": 2.972,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.209
+        },
+        {
+          "word": "snake",
+          "start": 0.267,
+          "end": 0.65
+        },
+        {
+          "word": "can’t",
+          "start": 0.697,
+          "end": 0.998
+        },
+        {
+          "word": "fly.",
+          "start": 1.057,
+          "end": 1.405
+        },
+        {
+          "word": "The",
+          "start": 1.428,
+          "end": 1.498
+        },
+        {
+          "word": "bird",
+          "start": 1.556,
+          "end": 1.823
+        },
+        {
+          "word": "can",
+          "start": 1.892,
+          "end": 2.055
+        },
+        {
+          "word": "fly.",
+          "start": 2.125,
+          "end": 2.694
+        }
+      ]
+    },
+    "yes! the snake can't fly.": {
+      "text": "Yes! The snake can’t fly.",
+      "file": "f8793aa447cb.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.395
+        },
+        {
+          "word": "The",
+          "start": 0.418,
+          "end": 0.488
+        },
+        {
+          "word": "snake",
+          "start": 0.534,
+          "end": 0.836
+        },
+        {
+          "word": "can’t",
+          "start": 0.882,
+          "end": 1.149
+        },
+        {
+          "word": "fly.",
+          "start": 1.196,
+          "end": 1.672
+        }
+      ]
+    },
+    "who can bark?": {
+      "text": "Who can bark?",
+      "file": "c46d81ab3b0d.mp3",
+      "duration": 1.347,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "bark?",
+          "start": 0.522,
+          "end": 1.045
+        }
+      ]
+    },
+    "the dog can bark. the cat can't bark.": {
+      "text": "The dog can bark. The cat can’t bark.",
+      "file": "c3236852ffb5.mp3",
+      "duration": 2.926,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.186
+        },
+        {
+          "word": "dog",
+          "start": 0.244,
+          "end": 0.453
+        },
+        {
+          "word": "can",
+          "start": 0.511,
+          "end": 0.662
+        },
+        {
+          "word": "bark.",
+          "start": 0.731,
+          "end": 1.3
+        },
+        {
+          "word": "The",
+          "start": 1.44,
+          "end": 1.579
+        },
+        {
+          "word": "cat",
+          "start": 1.637,
+          "end": 1.892
+        },
+        {
+          "word": "can’t",
+          "start": 1.962,
+          "end": 2.252
+        },
+        {
+          "word": "bark.",
+          "start": 2.299,
+          "end": 2.786
+        }
+      ]
+    },
+    "yes! the dog can bark.": {
+      "text": "Yes! The dog can bark.",
+      "file": "9295eacc94db.mp3",
+      "duration": 1.718,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.348
+        },
+        {
+          "word": "The",
+          "start": 0.395,
+          "end": 0.464
+        },
+        {
+          "word": "dog",
+          "start": 0.522,
+          "end": 0.731
+        },
+        {
+          "word": "can",
+          "start": 0.789,
+          "end": 0.94
+        },
+        {
+          "word": "bark.",
+          "start": 1.01,
+          "end": 1.544
+        }
+      ]
+    },
+    "who can't bark?": {
+      "text": "Who can’t bark?",
+      "file": "94659b2e94a0.mp3",
+      "duration": 1.533,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.267
+        },
+        {
+          "word": "can’t",
+          "start": 0.337,
+          "end": 0.65
+        },
+        {
+          "word": "bark?",
+          "start": 0.708,
+          "end": 1.265
+        }
+      ]
+    },
+    "the cat can't bark. the dog can bark.": {
+      "text": "The cat can’t bark. The dog can bark.",
+      "file": "9258f25641d6.mp3",
+      "duration": 3.251,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.186
+        },
+        {
+          "word": "cat",
+          "start": 0.244,
+          "end": 0.499
+        },
+        {
+          "word": "can’t",
+          "start": 0.569,
+          "end": 0.871
+        },
+        {
+          "word": "bark.",
+          "start": 0.929,
+          "end": 1.474
+        },
+        {
+          "word": "The",
+          "start": 1.66,
+          "end": 1.8
+        },
+        {
+          "word": "dog",
+          "start": 1.858,
+          "end": 2.09
+        },
+        {
+          "word": "can",
+          "start": 2.148,
+          "end": 2.31
+        },
+        {
+          "word": "bark.",
+          "start": 2.38,
+          "end": 2.949
+        }
+      ]
+    },
+    "yes! the cat can't bark.": {
+      "text": "Yes! The cat can’t bark.",
+      "file": "e804709870d4.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.372
+        },
+        {
+          "word": "The",
+          "start": 0.395,
+          "end": 0.464
+        },
+        {
+          "word": "cat",
+          "start": 0.511,
+          "end": 0.731
+        },
+        {
+          "word": "can’t",
+          "start": 0.789,
+          "end": 1.068
+        },
+        {
+          "word": "bark.",
+          "start": 1.126,
+          "end": 1.66
+        }
+      ]
+    },
+    "who can climb a tree?": {
+      "text": "Who can climb a tree?",
+      "file": "b337769feabd.mp3",
+      "duration": 1.765,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "climb",
+          "start": 0.511,
+          "end": 0.824
+        },
+        {
+          "word": "a",
+          "start": 0.871,
+          "end": 0.917
+        },
+        {
+          "word": "tree?",
+          "start": 0.987,
+          "end": 1.509
+        }
+      ]
+    },
+    "the monkey can climb a tree. the lion can't climb a tree.": {
+      "text": "The monkey can climb a tree. The lion can’t climb a tree.",
+      "file": "39a05f43565f.mp3",
+      "duration": 3.808,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.186
+        },
+        {
+          "word": "monkey",
+          "start": 0.244,
+          "end": 0.58
+        },
+        {
+          "word": "can",
+          "start": 0.639,
+          "end": 0.789
+        },
+        {
+          "word": "climb",
+          "start": 0.848,
+          "end": 1.161
+        },
+        {
+          "word": "a",
+          "start": 1.207,
+          "end": 1.231
+        },
+        {
+          "word": "tree.",
+          "start": 1.3,
+          "end": 1.614
+        },
+        {
+          "word": "The",
+          "start": 1.637,
+          "end": 1.707
+        },
+        {
+          "word": "lion",
+          "start": 1.8,
+          "end": 2.171
+        },
+        {
+          "word": "can’t",
+          "start": 2.241,
+          "end": 2.519
+        },
+        {
+          "word": "climb",
+          "start": 2.577,
+          "end": 2.856
+        },
+        {
+          "word": "a",
+          "start": 2.902,
+          "end": 2.926
+        },
+        {
+          "word": "tree.",
+          "start": 2.995,
+          "end": 3.495
+        }
+      ]
+    },
+    "yes! the monkey can climb a tree.": {
+      "text": "Yes! The monkey can climb a tree.",
+      "file": "af093236adf6.mp3",
+      "duration": 2.879,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.685
+        },
+        {
+          "word": "The",
+          "start": 0.906,
+          "end": 1.045
+        },
+        {
+          "word": "monkey",
+          "start": 1.103,
+          "end": 1.44
+        },
+        {
+          "word": "can",
+          "start": 1.486,
+          "end": 1.637
+        },
+        {
+          "word": "climb",
+          "start": 1.695,
+          "end": 1.962
+        },
+        {
+          "word": "a",
+          "start": 2.009,
+          "end": 2.055
+        },
+        {
+          "word": "tree.",
+          "start": 2.113,
+          "end": 2.612
+        }
+      ]
+    },
+    "who can't climb a tree?": {
+      "text": "Who can’t climb a tree?",
+      "file": "080a4f737cbf.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.313,
+          "end": 0.615
+        },
+        {
+          "word": "climb",
+          "start": 0.662,
+          "end": 0.94
+        },
+        {
+          "word": "a",
+          "start": 0.987,
+          "end": 1.033
+        },
+        {
+          "word": "tree?",
+          "start": 1.103,
+          "end": 1.556
+        }
+      ]
+    },
+    "the lion can't climb a tree. the monkey can climb a tree.": {
+      "text": "The lion can’t climb a tree. The monkey can climb a tree.",
+      "file": "35d24eaf1f9b.mp3",
+      "duration": 3.669,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.197
+        },
+        {
+          "word": "lion",
+          "start": 0.29,
+          "end": 0.615
+        },
+        {
+          "word": "can’t",
+          "start": 0.685,
+          "end": 0.929
+        },
+        {
+          "word": "climb",
+          "start": 0.975,
+          "end": 1.242
+        },
+        {
+          "word": "a",
+          "start": 1.289,
+          "end": 1.335
+        },
+        {
+          "word": "tree.",
+          "start": 1.393,
+          "end": 1.707
+        },
+        {
+          "word": "The",
+          "start": 1.73,
+          "end": 1.8
+        },
+        {
+          "word": "monkey",
+          "start": 1.858,
+          "end": 2.194
+        },
+        {
+          "word": "can",
+          "start": 2.241,
+          "end": 2.392
+        },
+        {
+          "word": "climb",
+          "start": 2.45,
+          "end": 2.728
+        },
+        {
+          "word": "a",
+          "start": 2.775,
+          "end": 2.798
+        },
+        {
+          "word": "tree.",
+          "start": 2.868,
+          "end": 3.344
+        }
+      ]
+    },
+    "yes! the lion can't climb a tree.": {
+      "text": "Yes! The lion can’t climb a tree.",
+      "file": "e574a6179354.mp3",
+      "duration": 2.647,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.441
+        },
+        {
+          "word": "The",
+          "start": 0.464,
+          "end": 0.534
+        },
+        {
+          "word": "lion",
+          "start": 0.627,
+          "end": 0.94
+        },
+        {
+          "word": "can’t",
+          "start": 1.01,
+          "end": 1.312
+        },
+        {
+          "word": "climb",
+          "start": 1.358,
+          "end": 1.649
+        },
+        {
+          "word": "a",
+          "start": 1.695,
+          "end": 1.741
+        },
+        {
+          "word": "tree.",
+          "start": 1.811,
+          "end": 2.357
+        }
+      ]
+    },
+    "who can ride a bike?": {
+      "text": "Who can ride a bike?",
+      "file": "9c68df9c5327.mp3",
+      "duration": 1.718,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "ride",
+          "start": 0.522,
+          "end": 0.778
+        },
+        {
+          "word": "a",
+          "start": 0.801,
+          "end": 0.824
+        },
+        {
+          "word": "bike?",
+          "start": 0.882,
+          "end": 1.393
+        }
+      ]
+    },
+    "the boy can ride a bike. the cat can't ride a bike.": {
+      "text": "The boy can ride a bike. The cat can’t ride a bike.",
+      "file": "fa7e2a7bdbee.mp3",
+      "duration": 3.808,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "boy",
+          "start": 0.244,
+          "end": 0.453
+        },
+        {
+          "word": "can",
+          "start": 0.511,
+          "end": 0.662
+        },
+        {
+          "word": "ride",
+          "start": 0.731,
+          "end": 0.964
+        },
+        {
+          "word": "a",
+          "start": 1.01,
+          "end": 1.033
+        },
+        {
+          "word": "bike.",
+          "start": 1.091,
+          "end": 1.637
+        },
+        {
+          "word": "The",
+          "start": 1.858,
+          "end": 1.997
+        },
+        {
+          "word": "cat",
+          "start": 2.067,
+          "end": 2.322
+        },
+        {
+          "word": "can’t",
+          "start": 2.392,
+          "end": 2.67
+        },
+        {
+          "word": "ride",
+          "start": 2.728,
+          "end": 2.949
+        },
+        {
+          "word": "a",
+          "start": 2.972,
+          "end": 2.995
+        },
+        {
+          "word": "bike.",
+          "start": 3.053,
+          "end": 3.506
+        }
+      ]
+    },
+    "yes! the boy can ride a bike.": {
+      "text": "Yes! The boy can ride a bike.",
+      "file": "dbc04e8cb0aa.mp3",
+      "duration": 2.276,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.441
+        },
+        {
+          "word": "The",
+          "start": 0.464,
+          "end": 0.557
+        },
+        {
+          "word": "boy",
+          "start": 0.615,
+          "end": 0.813
+        },
+        {
+          "word": "can",
+          "start": 0.871,
+          "end": 1.022
+        },
+        {
+          "word": "ride",
+          "start": 1.091,
+          "end": 1.347
+        },
+        {
+          "word": "a",
+          "start": 1.37,
+          "end": 1.393
+        },
+        {
+          "word": "bike.",
+          "start": 1.451,
+          "end": 1.95
+        }
+      ]
+    },
+    "who can't ride a bike?": {
+      "text": "Who can’t ride a bike?",
+      "file": "8a2c07a71934.mp3",
+      "duration": 1.765,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.302,
+          "end": 0.58
+        },
+        {
+          "word": "ride",
+          "start": 0.627,
+          "end": 0.848
+        },
+        {
+          "word": "a",
+          "start": 0.871,
+          "end": 0.917
+        },
+        {
+          "word": "bike?",
+          "start": 0.964,
+          "end": 1.44
+        }
+      ]
+    },
+    "the cat can't ride a bike. the boy can ride a bike.": {
+      "text": "The cat can’t ride a bike. The boy can ride a bike.",
+      "file": "b3af08b13d39.mp3",
+      "duration": 3.622,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.197
+        },
+        {
+          "word": "cat",
+          "start": 0.267,
+          "end": 0.546
+        },
+        {
+          "word": "can’t",
+          "start": 0.639,
+          "end": 0.952
+        },
+        {
+          "word": "ride",
+          "start": 1.01,
+          "end": 1.242
+        },
+        {
+          "word": "a",
+          "start": 1.289,
+          "end": 1.312
+        },
+        {
+          "word": "bike.",
+          "start": 1.37,
+          "end": 1.753
+        },
+        {
+          "word": "The",
+          "start": 1.776,
+          "end": 1.869
+        },
+        {
+          "word": "boy",
+          "start": 1.939,
+          "end": 2.194
+        },
+        {
+          "word": "can",
+          "start": 2.264,
+          "end": 2.415
+        },
+        {
+          "word": "ride",
+          "start": 2.485,
+          "end": 2.717
+        },
+        {
+          "word": "a",
+          "start": 2.74,
+          "end": 2.763
+        },
+        {
+          "word": "bike.",
+          "start": 2.821,
+          "end": 3.309
+        }
+      ]
+    },
+    "yes! the cat can't ride a bike.": {
+      "text": "Yes! The cat can’t ride a bike.",
+      "file": "4e9784d5eb3d.mp3",
+      "duration": 2.368,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.476
+        },
+        {
+          "word": "The",
+          "start": 0.499,
+          "end": 0.592
+        },
+        {
+          "word": "cat",
+          "start": 0.65,
+          "end": 0.882
+        },
+        {
+          "word": "can’t",
+          "start": 0.94,
+          "end": 1.242
+        },
+        {
+          "word": "ride",
+          "start": 1.289,
+          "end": 1.509
+        },
+        {
+          "word": "a",
+          "start": 1.533,
+          "end": 1.556
+        },
+        {
+          "word": "bike.",
+          "start": 1.614,
+          "end": 2.067
+        }
+      ]
+    },
+    "who can see in the morning?": {
+      "text": "Who can see in the morning?",
+      "file": "b51c07d42843.mp3",
+      "duration": 1.858,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "see",
+          "start": 0.522,
+          "end": 0.708
+        },
+        {
+          "word": "in",
+          "start": 0.755,
+          "end": 0.824
+        },
+        {
+          "word": "the",
+          "start": 0.871,
+          "end": 0.94
+        },
+        {
+          "word": "morning?",
+          "start": 0.998,
+          "end": 1.521
+        }
+      ]
+    },
+    "the swimmer can see in the morning. the bat can't see in the morning.": {
+      "text": "The swimmer can see in the morning. The bat can’t see in the morning.",
+      "file": "19f9f54bad12.mp3",
+      "duration": 4.876,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.221
+        },
+        {
+          "word": "swimmer",
+          "start": 0.29,
+          "end": 0.673
+        },
+        {
+          "word": "can",
+          "start": 0.731,
+          "end": 0.894
+        },
+        {
+          "word": "see",
+          "start": 0.998,
+          "end": 1.242
+        },
+        {
+          "word": "in",
+          "start": 1.289,
+          "end": 1.382
+        },
+        {
+          "word": "the",
+          "start": 1.428,
+          "end": 1.498
+        },
+        {
+          "word": "morning.",
+          "start": 1.556,
+          "end": 2.125
+        },
+        {
+          "word": "The",
+          "start": 2.531,
+          "end": 2.694
+        },
+        {
+          "word": "bat",
+          "start": 2.786,
+          "end": 3.053
+        },
+        {
+          "word": "can’t",
+          "start": 3.146,
+          "end": 3.46
+        },
+        {
+          "word": "see",
+          "start": 3.529,
+          "end": 3.738
+        },
+        {
+          "word": "in",
+          "start": 3.785,
+          "end": 3.855
+        },
+        {
+          "word": "the",
+          "start": 3.913,
+          "end": 3.982
+        },
+        {
+          "word": "morning.",
+          "start": 4.029,
+          "end": 4.563
+        }
+      ]
+    },
+    "yes! the swimmer can see in the morning.": {
+      "text": "Yes! The swimmer can see in the morning.",
+      "file": "23aa7c820929.mp3",
+      "duration": 2.508,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.43
+        },
+        {
+          "word": "The",
+          "start": 0.453,
+          "end": 0.546
+        },
+        {
+          "word": "swimmer",
+          "start": 0.592,
+          "end": 0.929
+        },
+        {
+          "word": "can",
+          "start": 0.975,
+          "end": 1.126
+        },
+        {
+          "word": "see",
+          "start": 1.196,
+          "end": 1.405
+        },
+        {
+          "word": "in",
+          "start": 1.451,
+          "end": 1.521
+        },
+        {
+          "word": "the",
+          "start": 1.567,
+          "end": 1.637
+        },
+        {
+          "word": "morning.",
+          "start": 1.695,
+          "end": 2.241
+        }
+      ]
+    },
+    "who can't see in the morning?": {
+      "text": "Who can’t see in the morning?",
+      "file": "b61f2bc47962.mp3",
+      "duration": 1.904,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.302,
+          "end": 0.58
+        },
+        {
+          "word": "see",
+          "start": 0.639,
+          "end": 0.813
+        },
+        {
+          "word": "in",
+          "start": 0.859,
+          "end": 0.929
+        },
+        {
+          "word": "the",
+          "start": 0.975,
+          "end": 1.045
+        },
+        {
+          "word": "morning?",
+          "start": 1.091,
+          "end": 1.579
+        }
+      ]
+    },
+    "the bat can't see in the morning. the swimmer can see in the morning.": {
+      "text": "The bat can’t see in the morning. The swimmer can see in the morning.",
+      "file": "5bc160cf22f4.mp3",
+      "duration": 4.69,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "bat",
+          "start": 0.255,
+          "end": 0.522
+        },
+        {
+          "word": "can’t",
+          "start": 0.592,
+          "end": 0.906
+        },
+        {
+          "word": "see",
+          "start": 0.975,
+          "end": 1.184
+        },
+        {
+          "word": "in",
+          "start": 1.231,
+          "end": 1.3
+        },
+        {
+          "word": "the",
+          "start": 1.347,
+          "end": 1.416
+        },
+        {
+          "word": "morning.",
+          "start": 1.463,
+          "end": 2.032
+        },
+        {
+          "word": "The",
+          "start": 2.438,
+          "end": 2.601
+        },
+        {
+          "word": "swimmer",
+          "start": 2.659,
+          "end": 3.03
+        },
+        {
+          "word": "can",
+          "start": 3.088,
+          "end": 3.239
+        },
+        {
+          "word": "see",
+          "start": 3.332,
+          "end": 3.541
+        },
+        {
+          "word": "in",
+          "start": 3.587,
+          "end": 3.657
+        },
+        {
+          "word": "the",
+          "start": 3.704,
+          "end": 3.773
+        },
+        {
+          "word": "morning.",
+          "start": 3.82,
+          "end": 4.354
+        }
+      ]
+    },
+    "yes! the bat can't see in the morning.": {
+      "text": "Yes! The bat can’t see in the morning.",
+      "file": "ac2e6dc9b249.mp3",
+      "duration": 3.019,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.058,
+          "end": 0.697
+        },
+        {
+          "word": "The",
+          "start": 0.952,
+          "end": 1.091
+        },
+        {
+          "word": "bat",
+          "start": 1.149,
+          "end": 1.358
+        },
+        {
+          "word": "can’t",
+          "start": 1.428,
+          "end": 1.695
+        },
+        {
+          "word": "see",
+          "start": 1.741,
+          "end": 1.904
+        },
+        {
+          "word": "in",
+          "start": 1.95,
+          "end": 1.997
+        },
+        {
+          "word": "the",
+          "start": 2.043,
+          "end": 2.113
+        },
+        {
+          "word": "morning.",
+          "start": 2.159,
+          "end": 2.682
+        }
+      ]
+    },
+    "who can sing?": {
+      "text": "Who can sing?",
+      "file": "ca5397eea992.mp3",
+      "duration": 1.347,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.476
+        },
+        {
+          "word": "sing?",
+          "start": 0.569,
+          "end": 1.045
+        }
+      ]
+    },
+    "the bird can sing. the lion can't sing.": {
+      "text": "The bird can sing. The lion can’t sing.",
+      "file": "0a8760e5a5ba.mp3",
+      "duration": 2.972,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.186
+        },
+        {
+          "word": "bird",
+          "start": 0.255,
+          "end": 0.511
+        },
+        {
+          "word": "can",
+          "start": 0.569,
+          "end": 0.72
+        },
+        {
+          "word": "sing.",
+          "start": 0.789,
+          "end": 1.126
+        },
+        {
+          "word": "The",
+          "start": 1.265,
+          "end": 1.405
+        },
+        {
+          "word": "lion",
+          "start": 1.498,
+          "end": 1.811
+        },
+        {
+          "word": "can’t",
+          "start": 1.881,
+          "end": 2.194
+        },
+        {
+          "word": "sing.",
+          "start": 2.252,
+          "end": 2.659
+        }
+      ]
+    },
+    "yes! the bird can sing.": {
+      "text": "Yes! The bird can sing.",
+      "file": "804ff37004d5.mp3",
+      "duration": 1.904,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.36
+        },
+        {
+          "word": "The",
+          "start": 0.383,
+          "end": 0.476
+        },
+        {
+          "word": "bird",
+          "start": 0.534,
+          "end": 0.789
+        },
+        {
+          "word": "can",
+          "start": 0.848,
+          "end": 1.01
+        },
+        {
+          "word": "sing.",
+          "start": 1.103,
+          "end": 1.579
+        }
+      ]
+    },
+    "who can't sing?": {
+      "text": "Who can’t sing?",
+      "file": "8d0cd31f864e.mp3",
+      "duration": 1.44,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.313,
+          "end": 0.627
+        },
+        {
+          "word": "sing?",
+          "start": 0.697,
+          "end": 1.138
+        }
+      ]
+    },
+    "the lion can't sing. the bird can sing.": {
+      "text": "The lion can’t sing. The bird can sing.",
+      "file": "621628d6a84f.mp3",
+      "duration": 2.833,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "lion",
+          "start": 0.279,
+          "end": 0.604
+        },
+        {
+          "word": "can’t",
+          "start": 0.673,
+          "end": 0.975
+        },
+        {
+          "word": "sing.",
+          "start": 1.033,
+          "end": 1.335
+        },
+        {
+          "word": "The",
+          "start": 1.358,
+          "end": 1.428
+        },
+        {
+          "word": "bird",
+          "start": 1.486,
+          "end": 1.753
+        },
+        {
+          "word": "can",
+          "start": 1.811,
+          "end": 1.985
+        },
+        {
+          "word": "sing.",
+          "start": 2.078,
+          "end": 2.508
+        }
+      ]
+    },
+    "yes! the lion can't sing.": {
+      "text": "Yes! The lion can’t sing.",
+      "file": "3b9fa0c3fa50.mp3",
+      "duration": 1.997,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.07,
+          "end": 0.383
+        },
+        {
+          "word": "The",
+          "start": 0.406,
+          "end": 0.476
+        },
+        {
+          "word": "lion",
+          "start": 0.546,
+          "end": 0.848
+        },
+        {
+          "word": "can’t",
+          "start": 0.917,
+          "end": 1.219
+        },
+        {
+          "word": "sing.",
+          "start": 1.277,
+          "end": 1.683
+        }
+      ]
+    },
+    "who can go to school?": {
+      "text": "Who can go to school?",
+      "file": "6ffab1b26df3.mp3",
+      "duration": 1.672,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can",
+          "start": 0.302,
+          "end": 0.453
+        },
+        {
+          "word": "go",
+          "start": 0.511,
+          "end": 0.627
+        },
+        {
+          "word": "to",
+          "start": 0.697,
+          "end": 0.789
+        },
+        {
+          "word": "school?",
+          "start": 0.859,
+          "end": 1.37
+        }
+      ]
+    },
+    "the toddler can go to school. the monkey can't go to school.": {
+      "text": "The toddler can go to school. The monkey can’t go to school.",
+      "file": "bfcb7d68312e.mp3",
+      "duration": 4.365,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.221
+        },
+        {
+          "word": "toddler",
+          "start": 0.29,
+          "end": 0.72
+        },
+        {
+          "word": "can",
+          "start": 0.766,
+          "end": 0.917
+        },
+        {
+          "word": "go",
+          "start": 0.975,
+          "end": 1.091
+        },
+        {
+          "word": "to",
+          "start": 1.161,
+          "end": 1.231
+        },
+        {
+          "word": "school.",
+          "start": 1.3,
+          "end": 1.846
+        },
+        {
+          "word": "The",
+          "start": 2.067,
+          "end": 2.229
+        },
+        {
+          "word": "monkey",
+          "start": 2.322,
+          "end": 2.775
+        },
+        {
+          "word": "can’t",
+          "start": 2.844,
+          "end": 3.158
+        },
+        {
+          "word": "go",
+          "start": 3.216,
+          "end": 3.332
+        },
+        {
+          "word": "to",
+          "start": 3.402,
+          "end": 3.471
+        },
+        {
+          "word": "school.",
+          "start": 3.541,
+          "end": 4.04
+        }
+      ]
+    },
+    "yes! the toddler can go to school.": {
+      "text": "Yes! The toddler can go to school.",
+      "file": "96048b1873c7.mp3",
+      "duration": 2.786,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.488
+        },
+        {
+          "word": "The",
+          "start": 0.534,
+          "end": 0.65
+        },
+        {
+          "word": "toddler",
+          "start": 0.72,
+          "end": 1.173
+        },
+        {
+          "word": "can",
+          "start": 1.231,
+          "end": 1.382
+        },
+        {
+          "word": "go",
+          "start": 1.451,
+          "end": 1.591
+        },
+        {
+          "word": "to",
+          "start": 1.683,
+          "end": 1.776
+        },
+        {
+          "word": "school.",
+          "start": 1.881,
+          "end": 2.519
+        }
+      ]
+    },
+    "who can't go to school?": {
+      "text": "Who can’t go to school?",
+      "file": "fc8dca4ea8ba.mp3",
+      "duration": 1.811,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.058,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.313,
+          "end": 0.569
+        },
+        {
+          "word": "go",
+          "start": 0.615,
+          "end": 0.731
+        },
+        {
+          "word": "to",
+          "start": 0.801,
+          "end": 0.894
+        },
+        {
+          "word": "school?",
+          "start": 0.964,
+          "end": 1.474
+        }
+      ]
+    },
+    "the monkey can't go to school. the toddler can go to school.": {
+      "text": "The monkey can’t go to school. The toddler can go to school.",
+      "file": "d9fc9d719132.mp3",
+      "duration": 4.133,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "monkey",
+          "start": 0.244,
+          "end": 0.58
+        },
+        {
+          "word": "can’t",
+          "start": 0.639,
+          "end": 0.917
+        },
+        {
+          "word": "go",
+          "start": 0.964,
+          "end": 1.08
+        },
+        {
+          "word": "to",
+          "start": 1.149,
+          "end": 1.219
+        },
+        {
+          "word": "school.",
+          "start": 1.289,
+          "end": 1.823
+        },
+        {
+          "word": "The",
+          "start": 2.078,
+          "end": 2.241
+        },
+        {
+          "word": "toddler",
+          "start": 2.31,
+          "end": 2.74
+        },
+        {
+          "word": "can",
+          "start": 2.786,
+          "end": 2.937
+        },
+        {
+          "word": "go",
+          "start": 2.995,
+          "end": 3.111
+        },
+        {
+          "word": "to",
+          "start": 3.181,
+          "end": 3.251
+        },
+        {
+          "word": "school.",
+          "start": 3.32,
+          "end": 3.831
+        }
+      ]
+    },
+    "yes! the monkey can't go to school.": {
+      "text": "Yes! The monkey can’t go to school.",
+      "file": "a3978fd7e756.mp3",
+      "duration": 2.879,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.65
+        },
+        {
+          "word": "The",
+          "start": 0.836,
+          "end": 0.975
+        },
+        {
+          "word": "monkey",
+          "start": 1.033,
+          "end": 1.37
+        },
+        {
+          "word": "can’t",
+          "start": 1.428,
+          "end": 1.683
+        },
+        {
+          "word": "go",
+          "start": 1.73,
+          "end": 1.834
+        },
+        {
+          "word": "to",
+          "start": 1.904,
+          "end": 1.974
+        },
+        {
+          "word": "school.",
+          "start": 2.043,
+          "end": 2.601
+        }
+      ]
+    },
+    "who can roar?": {
+      "text": "Who can roar?",
+      "file": "a41431a5fcaf.mp3",
+      "duration": 1.347,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.267
+        },
+        {
+          "word": "can",
+          "start": 0.325,
+          "end": 0.488
+        },
+        {
+          "word": "roar?",
+          "start": 0.58,
+          "end": 1.068
+        }
+      ]
+    },
+    "the lion can roar. the monkey can't roar.": {
+      "text": "The lion can roar. The monkey can’t roar.",
+      "file": "9c322346a1d7.mp3",
+      "duration": 3.065,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.07,
+          "end": 0.186
+        },
+        {
+          "word": "lion",
+          "start": 0.279,
+          "end": 0.604
+        },
+        {
+          "word": "can",
+          "start": 0.673,
+          "end": 0.824
+        },
+        {
+          "word": "roar.",
+          "start": 0.894,
+          "end": 1.277
+        },
+        {
+          "word": "The",
+          "start": 1.416,
+          "end": 1.544
+        },
+        {
+          "word": "monkey",
+          "start": 1.602,
+          "end": 1.939
+        },
+        {
+          "word": "can’t",
+          "start": 1.997,
+          "end": 2.299
+        },
+        {
+          "word": "roar.",
+          "start": 2.357,
+          "end": 2.752
+        }
+      ]
+    },
+    "yes! the lion can roar.": {
+      "text": "Yes! The lion can roar.",
+      "file": "c58077abd002.mp3",
+      "duration": 2.043,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.476
+        },
+        {
+          "word": "The",
+          "start": 0.522,
+          "end": 0.662
+        },
+        {
+          "word": "lion",
+          "start": 0.755,
+          "end": 1.126
+        },
+        {
+          "word": "can",
+          "start": 1.196,
+          "end": 1.347
+        },
+        {
+          "word": "roar.",
+          "start": 1.44,
+          "end": 1.892
+        }
+      ]
+    },
+    "who can't roar?": {
+      "text": "Who can’t roar?",
+      "file": "f548e2dac26e.mp3",
+      "duration": 1.44,
+      "words": [
+        {
+          "word": "Who",
+          "start": 0.07,
+          "end": 0.244
+        },
+        {
+          "word": "can’t",
+          "start": 0.302,
+          "end": 0.615
+        },
+        {
+          "word": "roar?",
+          "start": 0.673,
+          "end": 1.173
+        }
+      ]
+    },
+    "the monkey can't roar. the lion can roar.": {
+      "text": "The monkey can’t roar. The lion can roar.",
+      "file": "3e74971b4ed4.mp3",
+      "duration": 3.065,
+      "words": [
+        {
+          "word": "The",
+          "start": 0.093,
+          "end": 0.186
+        },
+        {
+          "word": "monkey",
+          "start": 0.244,
+          "end": 0.58
+        },
+        {
+          "word": "can’t",
+          "start": 0.639,
+          "end": 0.952
+        },
+        {
+          "word": "roar.",
+          "start": 1.01,
+          "end": 1.416
+        },
+        {
+          "word": "The",
+          "start": 1.463,
+          "end": 1.602
+        },
+        {
+          "word": "lion",
+          "start": 1.695,
+          "end": 2.009
+        },
+        {
+          "word": "can",
+          "start": 2.078,
+          "end": 2.229
+        },
+        {
+          "word": "roar.",
+          "start": 2.299,
+          "end": 2.786
+        }
+      ]
+    },
+    "yes! the monkey can't roar.": {
+      "text": "Yes! The monkey can’t roar.",
+      "file": "c71e178c1bfa.mp3",
+      "duration": 2.09,
+      "words": [
+        {
+          "word": "Yes!",
+          "start": 0.046,
+          "end": 0.43
+        },
+        {
+          "word": "The",
+          "start": 0.453,
+          "end": 0.546
+        },
+        {
+          "word": "monkey",
+          "start": 0.604,
+          "end": 0.94
+        },
+        {
+          "word": "can’t",
+          "start": 0.998,
+          "end": 1.3
+        },
+        {
+          "word": "roar.",
+          "start": 1.358,
+          "end": 1.811
+        }
+      ]
+    }
+  }
+}

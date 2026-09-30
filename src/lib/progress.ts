@@ -78,16 +78,9 @@ export function isReviewDue(p: LessonProgress, settings: LearnerSettings, now: n
   return now - since >= settings.reviewIntervalDays * DAY;
 }
 
-/** "Can't" unlocks once a "Can" lesson has ever been mastered, unless a therapist overrides. */
-export function isLocked(lesson: Lesson, learner: Learner, lessons: Lesson[]): boolean {
-  if (lesson.polarity !== "cant" || !learner.settings.canBeforeCant) return false;
-  return !lessons.some((l) => l.polarity === "can" && learner.progress[l.id]?.everMastered);
-}
+export type LessonStatus = "new" | "in-progress" | "mastered" | "review-due";
 
-export type LessonStatus = "new" | "in-progress" | "mastered" | "review-due" | "locked";
-
-export function lessonStatus(lesson: Lesson, learner: Learner, lessons: Lesson[], now: number): LessonStatus {
-  if (isLocked(lesson, learner, lessons)) return "locked";
+export function lessonStatus(lesson: Lesson, learner: Learner, now: number): LessonStatus {
   const p = learner.progress[lesson.id] ?? defaultProgress();
   if (p.masteredAt !== null) return isReviewDue(p, learner.settings, now) ? "review-due" : "mastered";
   if (p.sessionsCompleted > 0 || p.needsPractice) return "in-progress";

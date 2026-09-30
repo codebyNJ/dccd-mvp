@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applySession, isLocked, isReviewDue, lessonStatus, nextDelayStep } from "@/lib/progress";
+import { applySession, isReviewDue, lessonStatus, nextDelayStep } from "@/lib/progress";
 import { defaultLessons } from "@/lib/lessons";
 import { defaultProgress, defaultSettings, type Learner } from "@/lib/schema";
 
@@ -95,31 +95,18 @@ describe("review scheduling", () => {
   });
 });
 
-describe("unlock rule and status", () => {
-  const lessons = defaultLessons();
-  const [can, cant] = lessons;
+describe("book status", () => {
+  const [can] = defaultLessons();
 
-  it("Can't is locked until Can has been mastered", () => {
-    expect(isLocked(cant, learner(), lessons)).toBe(true);
-    expect(isLocked(can, learner(), lessons)).toBe(false);
-    const done = learner({ progress: { can: { ...defaultProgress(), everMastered: true, masteredAt: 1 } } });
-    expect(isLocked(cant, done, lessons)).toBe(false);
-  });
-
-  it("a therapist override unlocks Can't straight away", () => {
-    expect(isLocked(cant, learner({ settings: { ...defaultSettings(), canBeforeCant: false } }), lessons)).toBe(false);
-  });
-
-  it("stays unlocked after a failed Can review", () => {
+  it("a failed review goes back to in-progress", () => {
     const l = learner({ progress: { can: { ...defaultProgress(), everMastered: true, masteredAt: null, needsPractice: true } } });
-    expect(isLocked(cant, l, lessons)).toBe(false);
-    expect(lessonStatus(can, l, lessons, 0)).toBe("in-progress");
+    expect(lessonStatus(can, l, 0)).toBe("in-progress");
   });
 
   it("derives new / mastered / review-due", () => {
-    expect(lessonStatus(can, learner(), lessons, 0)).toBe("new");
+    expect(lessonStatus(can, learner(), 0)).toBe("new");
     const l = learner({ progress: { can: { ...defaultProgress(), everMastered: true, masteredAt: 0, lastReviewAt: 0, sessionsCompleted: 2 } } });
-    expect(lessonStatus(can, l, lessons, DAY)).toBe("mastered");
-    expect(lessonStatus(can, l, lessons, 8 * DAY)).toBe("review-due");
+    expect(lessonStatus(can, l, DAY)).toBe("mastered");
+    expect(lessonStatus(can, l, 8 * DAY)).toBe("review-due");
   });
 });
