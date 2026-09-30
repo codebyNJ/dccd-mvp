@@ -3,10 +3,9 @@
 import { useId, useState, type ReactNode } from "react";
 import { Avatar, AVATARS } from "@/components/Avatar";
 import { Icon } from "@/components/Icon";
-import { S } from "@/config/strings";
+import { S, SPEEDS } from "@/config/strings";
 import { TEACHING } from "@/config/teaching";
-import { delaySecondsFor } from "@/lib/progress";
-import { defaultProgress, type AvatarId, type Learner, type LearnerSettings } from "@/lib/schema";
+import type { AvatarId, Learner, LearnerSettings } from "@/lib/schema";
 import { useApp } from "@/store/app";
 
 const L = S.grownUp.learners;
@@ -35,6 +34,7 @@ export function LearnersTab({ onShowProgress }: { onShowProgress: (id: string) =
   );
 }
 
+/** Adding a child is two things: a nickname and a picture. Everything else has a sensible default. */
 function LearnerForm({ learner, onDone }: { learner?: Learner; onDone: () => void }) {
   const addLearner = useApp((s) => s.addLearner);
   const updateLearner = useApp((s) => s.updateLearner);
@@ -45,7 +45,7 @@ function LearnerForm({ learner, onDone }: { learner?: Learner; onDone: () => voi
 
   return (
     <form
-      className="panel flex flex-col gap-4"
+      className="panel flex flex-col gap-5"
       onSubmit={(e) => {
         e.preventDefault();
         if (!valid) return;
@@ -58,18 +58,28 @@ function LearnerForm({ learner, onDone }: { learner?: Learner; onDone: () => voi
         <label htmlFor={`${id}-nick`} className="font-medium">
           {L.nickname}
         </label>
-        <input id={`${id}-nick`} className="field max-w-sm" value={nickname} maxLength={24} autoComplete="off" required onChange={(e) => setNickname(e.target.value)} aria-describedby={`${id}-help`} />
+        <input
+          id={`${id}-nick`}
+          className="field max-w-sm text-lg"
+          value={nickname}
+          maxLength={24}
+          autoComplete="off"
+          autoFocus
+          required
+          onChange={(e) => setNickname(e.target.value)}
+          aria-describedby={`${id}-help`}
+        />
         <p id={`${id}-help`} className="text-sm text-ink-muted">
           {L.nicknameHelp}
         </p>
       </div>
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 font-medium">{L.avatar}</legend>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {AVATARS.map((a) => (
-            <label key={a} className={`cursor-pointer rounded-full border-[3px] p-0.5 ${avatar === a ? "border-blue-700" : "border-transparent"}`}>
+            <label key={a} className={`cursor-pointer rounded-full border-[3px] p-1 ${avatar === a ? "border-blue-700" : "border-transparent"}`}>
               <input type="radio" name={`${id}-avatar`} value={a} checked={avatar === a} onChange={() => setAvatar(a)} className="sr-only" aria-label={a} />
-              <Avatar id={a} size={52} />
+              <Avatar id={a} size={72} />
             </label>
           ))}
         </div>
@@ -90,7 +100,6 @@ function LearnerPanel({ learner, onShowProgress }: { learner: Learner; onShowPro
   const lessons = useApp((s) => s.lessons);
   const update = useApp((s) => s.updateSettings);
   const updateLearner = useApp((s) => s.updateLearner);
-  const resetDelay = useApp((s) => s.resetDelay);
   const deleteLearner = useApp((s) => s.deleteLearner);
   const [editing, setEditing] = useState(false);
   const set = (patch: Partial<LearnerSettings>) => update(learner.id, patch);
@@ -119,88 +128,61 @@ function LearnerPanel({ learner, onShowProgress }: { learner: Learner; onShowPro
         </button>
       </header>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <fieldset className="flex flex-col gap-3">
-          <legend className="mb-2 font-semibold">{L.childSettings}</legend>
-          <Check label={L.calmMode} help={L.calmHelp} checked={st.calmMode} onChange={(v) => set({ calmMode: v })} />
-          <Check label={L.voiceOn} checked={st.voiceOn} onChange={(v) => set({ voiceOn: v })} />
-          <Check label={L.watchAutoplay} checked={st.watchAutoplay} onChange={(v) => set({ watchAutoplay: v })} />
-          <Select label={L.voiceRate} value={String(st.voiceRate)} options={Object.entries(L.voiceRates)} onChange={(v) => set({ voiceRate: Number(v) })} />
-          <Select label={L.textSize} value={st.textSize} options={Object.entries(L.textSizes)} onChange={(v) => set({ textSize: v as LearnerSettings["textSize"] })} />
-          <fieldset>
-            <legend className="font-medium">{L.assign}</legend>
-            <p className="text-sm text-ink-muted">{L.assignHelp}</p>
-            <div className="mt-1 flex flex-wrap gap-4">
-              {lessons.map((les) => (
-                <Check
-                  key={les.id}
-                  label={les.title}
-                  checked={learner.assigned.includes(les.id)}
-                  onChange={(v) =>
-                    updateLearner(learner.id, { assigned: v ? [...learner.assigned, les.id] : learner.assigned.filter((x) => x !== les.id) })
-                  }
-                />
-              ))}
-            </div>
+      <details className="group">
+        <summary className="adult-btn w-fit cursor-pointer list-none">
+          <Icon name="next" className="transition-transform group-open:rotate-90" />
+          {L.moreSettings}
+        </summary>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <fieldset className="flex flex-col gap-3">
+            <legend className="mb-2 font-semibold">{L.childSettings}</legend>
+            <Select label={L.voiceRate} value={String(st.voiceRate)} options={SPEEDS.map(([r, t]) => [String(r), t] as const)} onChange={(v) => set({ voiceRate: Number(v) })} />
+            <Check label={L.voiceOn} checked={st.voiceOn} onChange={(v) => set({ voiceOn: v })} />
+            <Check label={L.calmMode} help={L.calmHelp} checked={st.calmMode} onChange={(v) => set({ calmMode: v })} />
+            <Select label={L.textSize} value={st.textSize} options={Object.entries(L.textSizes)} onChange={(v) => set({ textSize: v as LearnerSettings["textSize"] })} />
+            <fieldset>
+              <legend className="font-medium">{L.assign}</legend>
+              <p className="text-sm text-ink-muted">{L.assignHelp}</p>
+              <div className="mt-1 flex flex-wrap gap-4">
+                {lessons.map((les) => (
+                  <Check
+                    key={les.id}
+                    label={les.title}
+                    checked={learner.assigned.includes(les.id)}
+                    onChange={(v) =>
+                      updateLearner(learner.id, { assigned: v ? [...learner.assigned, les.id] : learner.assigned.filter((x) => x !== les.id) })
+                    }
+                  />
+                ))}
+              </div>
+            </fieldset>
           </fieldset>
-        </fieldset>
 
-        <fieldset className="flex flex-col gap-3">
-          <legend className="mb-2 font-semibold">{L.settings}</legend>
-          <Select label={L.strategy} value={st.strategy} options={Object.entries(L.strategies)} onChange={(v) => set({ strategy: v as LearnerSettings["strategy"] })} />
-          {st.strategy === "errorless" && (
-            <div className="flex flex-col gap-1">
-              <span className="font-medium">{L.delayStep}</span>
-              <ul className="flex flex-col gap-1">
-                {lessons.map((les) => {
-                  const p = learner.progress[les.id] ?? defaultProgress();
-                  return (
-                    <li key={les.id} className="flex flex-wrap items-center gap-3">
-                      <span className="min-w-16">{les.title}</span>
-                      <span className="font-medium">{L.seconds(delaySecondsFor(p.delayStep))}</span>
-                      <span className="text-sm text-ink-muted">({TEACHING.timeDelaySteps.map((s) => `${s}`).join(" → ")} s)</span>
-                      {p.delayStep > 0 && (
-                        <button className="adult-btn !min-h-9 !py-1 text-sm" onClick={() => resetDelay(learner.id, les.id)}>
-                          {L.delayReset}
-                        </button>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
-          <Select label={L.tokenBoardSize} value={String(st.tokenBoardSize)} options={TEACHING.tokenBoardSizes.map((n) => [String(n), String(n)])} onChange={(v) => set({ tokenBoardSize: Number(v) as LearnerSettings["tokenBoardSize"] })} />
-          <Check label={L.tokensForPrompted} checked={st.tokensForPrompted} onChange={(v) => set({ tokensForPrompted: v })} />
-          <Row label={L.mastery}>
+          <fieldset className="flex flex-col gap-3">
+            <legend className="mb-2 font-semibold">{L.settings}</legend>
+            <Row label={L.mastery}>
+              <Select
+                label={L.masteryPercent}
+                value={String(st.masteryPercent)}
+                options={TEACHING.masteryPercentOptions.map((n) => [String(n), `${n}%`])}
+                onChange={(v) => set({ masteryPercent: Number(v) as LearnerSettings["masteryPercent"] })}
+              />
+              <Select
+                label={L.masterySessions}
+                value={String(st.masterySessions)}
+                options={TEACHING.masterySessionOptions.map((n) => [String(n), String(n)])}
+                onChange={(v) => set({ masterySessions: Number(v) })}
+              />
+            </Row>
             <Select
-              label={L.masteryPercent}
-              value={String(st.masteryPercent)}
-              options={TEACHING.masteryPercentOptions.map((n) => [String(n), `${n}%`])}
-              onChange={(v) => set({ masteryPercent: Number(v) as LearnerSettings["masteryPercent"] })}
+              label={L.review}
+              value={String(st.reviewIntervalDays)}
+              options={[3, 7, 14, 30].map((n) => [String(n), L.days(n)])}
+              onChange={(v) => set({ reviewIntervalDays: Number(v) })}
             />
-            <Select
-              label={L.masterySessions}
-              value={String(st.masterySessions)}
-              options={TEACHING.masterySessionOptions.map((n) => [String(n), String(n)])}
-              onChange={(v) => set({ masterySessions: Number(v) })}
-            />
-          </Row>
-          <Select
-            label={L.pause}
-            value={String(st.interTrialPauseMs)}
-            options={TEACHING.interTrialPauseOptionsMs.map((n) => [String(n), L.seconds(n / 1000)])}
-            onChange={(v) => set({ interTrialPauseMs: Number(v) })}
-          />
-          <Select
-            label={L.review}
-            value={String(st.reviewIntervalDays)}
-            options={[3, 7, 14, 30].map((n) => [String(n), L.days(n)])}
-            onChange={(v) => set({ reviewIntervalDays: Number(v) })}
-          />
-          <Check label={L.canBeforeCant} help={L.canBeforeCantHelp} checked={st.canBeforeCant} onChange={(v) => set({ canBeforeCant: v })} />
-        </fieldset>
-      </div>
+          </fieldset>
+        </div>
+      </details>
     </article>
   );
 }

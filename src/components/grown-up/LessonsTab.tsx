@@ -3,139 +3,252 @@
 import { useId, useState } from "react";
 import { Icon } from "@/components/Icon";
 import { S } from "@/config/strings";
-import { CHARACTER_IDS, characterName, type CharacterId } from "@/data/characters";
+import { CHARACTER_IDS, characterName, characterSrc, type CharacterId } from "@/data/characters";
 import { isTeachable, parseItemsCsv, type CsvResult } from "@/lib/csv";
-import type { Item, Lesson } from "@/lib/schema";
+import type { Item, Lesson, Polarity } from "@/lib/schema";
+import { correctCharacter, instructionLine } from "@/lib/templates";
 import { useApp } from "@/store/app";
+import { RoughCircle } from "../child/RoughCircle";
 
 const T = S.grownUp.lessons;
 
+/** Books and their pages. A page is made by tapping pictures, not by filling in a table. */
 export function LessonsTab() {
   const lessons = useApp((s) => s.lessons);
+  const resetLesson = useApp((s) => s.resetLesson);
   const [lessonId, setLessonId] = useState(lessons[0]?.id ?? "");
+  const [editing, setEditing] = useState<Item | "new" | null>(null);
   const lesson = lessons.find((l) => l.id === lessonId) ?? lessons[0];
-  const id = useId();
   if (!lesson) return null;
 
   return (
     <>
-      <div className="flex flex-wrap items-end gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor={id} className="font-medium">
-            {T.lesson}
-          </label>
-          <select id={id} className="field" value={lesson.id} onChange={(e) => setLessonId(e.target.value)}>
-            {lessons.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.title}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label={T.book}>
+        {lessons.map((l) => (
+          <button
+            key={l.id}
+            className={`adult-btn ${l.id === lesson.id ? "primary" : ""}`}
+            aria-pressed={l.id === lesson.id}
+            onClick={() => (setLessonId(l.id), setEditing(null))}
+          >
+            <Icon name="book" />
+            {S.child.bookTitle(l.polarity)}
+          </button>
+        ))}
         <p className="flex-1 text-sm text-ink-muted">{T.help}</p>
       </div>
-      <ItemsEditor lesson={lesson} />
-      <CsvImport lesson={lesson} />
+
+      {editing ? (
+        <PageMaker key={editing === "new" ? "new" : editing.id} lesson={lesson} item={editing === "new" ? undefined : editing} onDone={() => setEditing(null)} />
+      ) : (
+        <Pages lesson={lesson} onNew={() => setEditing("new")} onEdit={setEditing} />
+      )}
+
+      <details className="panel group">
+        <summary className="flex cursor-pointer list-none items-center gap-2 font-semibold">
+          <Icon name="next" className="h-5 w-5 transition-transform group-open:rotate-90" />
+          {T.moreTools}
+        </summary>
+        <div className="mt-4 flex flex-col gap-4">
+          <CsvImport lesson={lesson} />
+          <button className="adult-btn danger self-start" onClick={() => confirm(T.resetConfirm(lesson.title)) && resetLesson(lesson.id)}>
+            <Icon name="replay" />
+            {T.reset}
+          </button>
+        </div>
+      </details>
     </>
   );
 }
 
-function ItemsEditor({ lesson }: { lesson: Lesson }) {
-  const addItem = useApp((s) => s.addItem);
-  const resetLesson = useApp((s) => s.resetLesson);
+function Pages({ lesson, onNew, onEdit }: { lesson: Lesson; onNew: () => void; onEdit: (i: Item) => void }) {
+  const del = useApp((s) => s.deleteItem);
   return (
-    <section className="panel flex flex-col gap-3" aria-labelledby="items-h">
+    <section className="panel flex flex-col gap-4" aria-labelledby="pages-h">
       <div className="flex flex-wrap items-center gap-2">
-        <h2 id="items-h" className="flex-1 text-lg font-semibold">
+        <h2 id="pages-h" className="flex-1 text-lg font-semibold">
           {lesson.title}
         </h2>
-        <button className="adult-btn" onClick={() => addItem(lesson.id)}>
+        <button className="adult-btn primary" onClick={onNew}>
           <Icon name="plus" />
-          {T.addRow}
-        </button>
-        <button className="adult-btn danger" onClick={() => confirm(T.resetConfirm(lesson.title)) && resetLesson(lesson.id)}>
-          <Icon name="replay" />
-          {T.reset}
+          {T.newPage}
         </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[720px] text-left text-sm">
-          <thead className="text-ink-muted">
-            <tr>
-              <th className="py-2 pr-2 font-medium">{T.verb}</th>
-              <th className="py-2 pr-2 font-medium">{T.optionA}</th>
-              <th className="py-2 pr-2 font-medium">{T.optionB}</th>
-              <th className="py-2 pr-2 font-medium">{T.answer}</th>
-              <th className="py-2 pr-2 font-medium">{T.status}</th>
-              <th className="py-2 font-medium">
-                <span className="sr-only">{T.deleteRow}</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {lesson.items.map((item) => (
-              <ItemRow key={item.id} lessonId={lesson.id} item={item} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3">
+        {lesson.items.map((item) => (
+          <li key={item.id} className="flex flex-col gap-2 rounded-[var(--radius-small)] border border-line bg-paper p-3" data-testid="item-row">
+            <button className="flex flex-col gap-2 text-left" onClick={() => onEdit(item)} aria-label={T.editPage(item.verb)}>
+              <span className="grid grid-cols-2 gap-2">
+                {[item.optionA, item.optionB].map((c, i) => (
+                  <Thumb key={i} character={c} polarity={lesson.polarity} marked={c === correctCharacter(item, lesson.polarity)} />
+                ))}
+              </span>
+              <span className="font-medium">{instructionLine(item, lesson.polarity)}</span>
+            </button>
+            <div className="mt-auto flex items-center gap-2">
+              {item.status === "draft" && <span className="rounded-full bg-blue-50 px-2 py-0.5 text-sm text-blue-800">{T.hidden}</span>}
+              {item.status === "approved" && !isTeachable(item) && <span className="rounded-full bg-coral-50 px-2 py-0.5 text-sm text-coral-ink">{T.needsFix}</span>}
+              <button
+                className="adult-btn danger ml-auto !min-h-9 !px-2"
+                aria-label={T.deletePage(item.verb)}
+                onClick={() => confirm(T.deletePageConfirm(item.verb)) && del(lesson.id, item.id)}
+              >
+                <Icon name="trash" />
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
 
-function CharSelect({ label, value, choices, onChange }: { label: string; value: CharacterId; choices: readonly CharacterId[]; onChange: (v: CharacterId) => void }) {
+/** A small picture, circled as it will be on the child's page once they answer. */
+function Thumb({ character, polarity, marked }: { character: CharacterId; polarity: Polarity; marked: boolean }) {
   return (
-    <select className="field w-full" aria-label={label} value={value} onChange={(e) => onChange(e.target.value as CharacterId)}>
-      {choices.map((c) => (
-        <option key={c} value={c}>
-          {characterName(c)}
-        </option>
-      ))}
-    </select>
+    <span className="relative flex aspect-square items-center justify-center rounded-[10px] border border-line bg-white p-1.5">
+      {/* eslint-disable-next-line @next/next/no-img-element -- static export */}
+      <img src={characterSrc(character)} alt={characterName(character)} className="h-full w-full object-contain" />
+      {marked && <RoughCircle show calm color={polarity === "cant" ? "var(--coral-500)" : "var(--blue-500)"} />}
+    </span>
   );
 }
 
-function ItemRow({ lessonId, item }: { lessonId: string; item: Item }) {
-  const update = useApp((s) => s.updateItem);
-  const del = useApp((s) => s.deleteItem);
-  const set = (patch: Partial<Omit<Item, "id">>) => update(lessonId, item.id, patch);
-  const label = (col: string) => `${col}: ${item.verb || "(no verb)"}`;
-  const broken = item.status === "approved" && !isTeachable(item);
+/** New page in three taps: the action, two pictures, who can't. The preview is the child's page. */
+function PageMaker({ lesson, item, onDone }: { lesson: Lesson; item?: Item; onDone: () => void }) {
+  const addItem = useApp((s) => s.addItem);
+  const updateItem = useApp((s) => s.updateItem);
+  const [verb, setVerb] = useState(item?.verb ?? "");
+  const [pair, setPair] = useState<CharacterId[]>(item ? [item.optionA, item.optionB] : []);
+  const [picked, setPicked] = useState<CharacterId | null>(item?.answer ?? null);
+  const [show, setShow] = useState(item ? item.status === "approved" : true);
+  const id = useId();
+
+  const answer = picked && pair.includes(picked) ? picked : null;
+  const action = verb.trim();
+  const ready = action.length > 0 && pair.length === 2 && answer !== null;
+  const toggle = (c: CharacterId) => setPair((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c].slice(-2)));
+
+  const save = () => {
+    if (!ready) return;
+    const page = { verb: action, optionA: pair[0], optionB: pair[1], answer, status: show ? "approved" : "draft" } as const;
+    if (item) updateItem(lesson.id, item.id, page);
+    else addItem(lesson.id, page);
+    onDone();
+  };
+
+  const preview: Item | null = pair.length === 2 ? { id: "preview", verb: action, optionA: pair[0], optionB: pair[1], answer: answer ?? pair[1], status: "approved" } : null;
+
   return (
-    <>
-      <tr className="border-t border-line align-top" data-testid="item-row">
-        <td className="py-2 pr-2">
-          <input className="field w-full" aria-label={label(T.verb)} value={item.verb} onChange={(e) => set({ verb: e.target.value })} />
-        </td>
-        <td className="py-2 pr-2">
-          <CharSelect label={label(T.optionA)} value={item.optionA} choices={CHARACTER_IDS} onChange={(v) => set({ optionA: v })} />
-        </td>
-        <td className="py-2 pr-2">
-          <CharSelect label={label(T.optionB)} value={item.optionB} choices={CHARACTER_IDS} onChange={(v) => set({ optionB: v })} />
-        </td>
-        <td className="py-2 pr-2">
-          <CharSelect label={label(T.answer)} value={item.answer} choices={[...new Set([item.optionA, item.optionB])]} onChange={(v) => set({ answer: v })} />
-        </td>
-        <td className="py-2 pr-2">
-          <select className="field w-full" aria-label={label(T.status)} value={item.status} onChange={(e) => set({ status: e.target.value as Item["status"] })}>
-            <option value="approved">{T.approved}</option>
-            <option value="draft">{T.draft}</option>
-          </select>
-        </td>
-        <td className="py-2">
-          <button className="adult-btn danger !px-3" aria-label={label(T.deleteRow)} onClick={() => confirm(T.deleteRowConfirm(item.verb)) && del(lessonId, item.id)}>
-            <Icon name="trash" />
-          </button>
-        </td>
-      </tr>
-      {broken && (
-        <tr>
-          <td colSpan={6} className="pb-2 text-coral-ink">
-            {T.rowInvalid}
-          </td>
-        </tr>
-      )}
-    </>
+    <form
+      className="panel flex flex-col gap-6"
+      aria-labelledby={`${id}-h`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        save();
+      }}
+    >
+      <h2 id={`${id}-h`} className="text-lg font-semibold">
+        {item ? T.editPage(item.verb) : T.newPage}
+      </h2>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <label htmlFor={`${id}-verb`} className="font-semibold">
+              {T.stepVerb}
+            </label>
+            <input
+              id={`${id}-verb`}
+              className="field max-w-sm text-lg"
+              value={verb}
+              placeholder={T.verbPlaceholder}
+              autoComplete="off"
+              autoFocus
+              onChange={(e) => setVerb(e.target.value)}
+              aria-describedby={`${id}-verb-help`}
+            />
+            <p id={`${id}-verb-help`} className="text-sm text-ink-muted">
+              {T.verbHelp}
+            </p>
+          </div>
+
+          <fieldset className="flex flex-col gap-2">
+            <legend className="mb-1 font-semibold">{T.stepPictures}</legend>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-2">
+              {CHARACTER_IDS.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  aria-pressed={pair.includes(c)}
+                  onClick={() => toggle(c)}
+                  className={`flex flex-col items-center gap-1 rounded-[var(--radius-small)] border-2 bg-white p-2 text-sm ${pair.includes(c) ? "border-blue-700 bg-blue-50" : "border-line"}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static export */}
+                  <img src={characterSrc(c)} alt="" className="h-16 w-16 object-contain" />
+                  {characterName(c)}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset className="flex flex-col gap-2">
+            <legend className="mb-1 font-semibold">{T.stepAnswer(action)}</legend>
+            {pair.length < 2 ? (
+              <p className="text-ink-muted">{T.pickTwoFirst}</p>
+            ) : (
+              <div className="flex flex-wrap gap-3" role="group" aria-label={T.stepAnswer(action)}>
+                {pair.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    aria-pressed={answer === c}
+                    aria-label={`${characterName(c)} can’t`}
+                    onClick={() => setPicked(c)}
+                    className={`relative flex w-32 flex-col items-center gap-1 rounded-[var(--radius-small)] border-2 bg-white p-2 ${answer === c ? "border-coral-500" : "border-line"}`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- static export */}
+                    <img src={characterSrc(c)} alt="" className="h-20 w-20 object-contain" />
+                    {characterName(c)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </fieldset>
+
+          <label className="flex min-h-[var(--tap-adult)] cursor-pointer items-center gap-3">
+            <input type="checkbox" className="h-5 w-5 accent-[var(--blue-700)]" checked={show} onChange={(e) => setShow(e.target.checked)} />
+            <span className="font-medium">{T.showToChildren}</span>
+          </label>
+        </div>
+
+        <aside className="flex flex-col gap-2" aria-label={T.preview}>
+          <h3 className="font-semibold">{T.preview}</h3>
+          <div className="book-page !h-auto flex flex-col gap-3" data-testid="page-preview">
+            <p className="text-xl font-medium">{instructionLine({ verb: action || "…" }, lesson.polarity)}</p>
+            <div className="grid grid-cols-2 gap-3">
+              {preview ? (
+                [preview.optionA, preview.optionB].map((c, i) => <Thumb key={i} character={c} polarity={lesson.polarity} marked={answer !== null && c === correctCharacter(preview, lesson.polarity)} />)
+              ) : (
+                <>
+                  <span className="aspect-square rounded-[10px] border-2 border-dashed border-line" />
+                  <span className="aspect-square rounded-[10px] border-2 border-dashed border-line" />
+                </>
+              )}
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div className="flex gap-2">
+        <button type="submit" className="adult-btn primary" disabled={!ready}>
+          <Icon name="check" />
+          {T.savePage}
+        </button>
+        <button type="button" className="adult-btn" onClick={onDone}>
+          {T.cancel}
+        </button>
+      </div>
+    </form>
   );
 }
 

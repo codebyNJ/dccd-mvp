@@ -60,7 +60,7 @@ export async function stored(page: Page): Promise<PersistedState> {
 
 const other = (c: string, v: (typeof DCCD_DECK)[number]) => (v.optionA === c ? v.optionB : v.optionA);
 
-/** The character the child should tap for an instruction such as "Who can’t swim?". */
+/** The character the child should tap for a question such as "Who can’t swim?". */
 export function answerFor(instruction: string): string | null {
   const m = /^Who (can’t|can) (.+)\?$/.exec(instruction.replace(/\s+/g, " ").trim());
   if (!m) return null;
@@ -69,63 +69,32 @@ export function answerFor(instruction: string): string | null {
   return m[1] === "can" ? other(row.answer, row) : row.answer;
 }
 
-export interface RunOptions {
-  /** Trial numbers (0-based, within this call) on which to tap the wrong card first. */
+export interface ReadOptions {
+  /** Pages to read, counted from the page that is open now. */
+  pages: number;
+  /** Page numbers (1-based, as shown on the page) where the child taps the wrong picture first. */
   wrongOn?: number[];
-  /** Stop after this many trials. */
-  trials: number;
+  /** Learn pages where the child taps the wrong picture twice, so the book shows the answer. */
+  wrongTwiceOn?: number[];
 }
 
-/**
- * Answer trials until `trials` have been completed. Uses the glow/prompt state
- * when a prompt is showing, otherwise the instruction text.
- */
-export async function answerTrials(page: Page, { trials, wrongOn = [] }: RunOptions): Promise<{ boardsFilled: number }> {
-  const keepGoing = page.getByRole("button", { name: "Keep going" });
-  let boardsFilled = 0;
-  for (let t = 0; t < trials; t++) {
-    let tappedWrong = false;
-    for (;;) {
-      if (await keepGoing.isVisible()) {
-        // The dialog fades out after a click; a second click on the leaving button is harmless.
-        if (await keepGoing.click({ timeout: 1000 }).then(() => true, () => false)) boardsFilled++;
-        continue;
-      }
-      const ready = page.locator('button.char-card[aria-disabled="false"]');
-      if ((await ready.count()) !== 2) {
-        await page.waitForTimeout(20);
-        continue;
-      }
-      const prompted = page.locator('button.char-card[data-state="prompted"], button.char-card[data-state="glow"]');
-      let correct: string | null = null;
-      if ((await prompted.count()) === 1) correct = await prompted.getAttribute("data-character");
-      else {
-        const line = (await page.locator(".a-prompt p").first().textContent().catch(() => null)) ?? "";
-        correct = answerFor(line);
-      }
-      if (!correct) {
-        await page.waitForTimeout(20);
-        continue;
-      }
-      const wrong = wrongOn.includes(t) && !tappedWrong;
-      const target = wrong
-        ? page.locator(`button.char-card[aria-disabled="false"]:not([data-character="${correct}"])`)
-        : page.locator(`button.char-card[aria-disabled="false"][data-character="${correct}"]`);
-      if ((await target.count()) !== 1) {
-        await page.waitForTimeout(20);
-        continue;
-      }
-      await target.click({ timeout: 2000 }).catch(() => undefined);
-      if (wrong) {
-        tappedWrong = true;
-        // Check moves on after a wrong tap; Practise re-presents the same trial.
-        if (!(await page.locator('.a-schedule [aria-current="step"]').textContent())?.includes("Practise")) break;
-        continue;
-      }
-      break;
-    }
-    // Wait for the cards to leave before the next trial.
-    await expect(page.locator('button.char-card[aria-disabled="false"]')).toHaveCount(0);
+/** Read pages the way a child does: tap a picture, wait for the page corner, turn. */
+export async function readPages(page: Page, { pages, wrongOn = [], wrongTwiceOn = [] }: ReadOptions) {
+  const first = Number(await page.locator("[data-page]").getAttribute("data-page"));
+  for (let n = first; n < first + pages; n++) {
+    const sheet = page.locator(`[data-page="${n}"]`);
+    await expect(sheet).toHaveCount(1);
+    const correct = answerFor((await sheet.getAttribute("data-question")) ?? "");
+    expect(correct, "a known question").not.toBeNull();
+    const right = sheet.locator(`button.char-card[data-character="${correct}"]`);
+    const wrong = sheet.locator(`button.char-card:not([data-character="${correct}"])`);
+    const learn = (await sheet.getAttribute("data-step")) === "practise";
+
+    if (wrongOn.includes(n) || wrongTwiceOn.includes(n)) {
+      await wrong.click();
+      if (wrongTwiceOn.includes(n)) await wrong.click();
+      else if (learn) await right.click();
+    } else await right.click();
+    await sheet.getByRole("button", { name: "Next page" }).click();
   }
-  return { boardsFilled };
 }

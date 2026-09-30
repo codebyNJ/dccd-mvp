@@ -71,7 +71,7 @@ describe("schema migration and import", () => {
     if (!r.ok) return;
     expect(r.state.schemaVersion).toBe(SCHEMA_VERSION);
     expect(r.state.lessons).toEqual(defaultLessons());
-    expect(r.state.learners[0].settings).toMatchObject({ calmMode: false, strategy: "errorless", tokenBoardSize: 5, masteryPercent: 90 });
+    expect(r.state.learners[0].settings).toMatchObject({ calmMode: false, strategy: "errorless", voiceRate: 1, masteryPercent: 90 });
     expect(r.state.learners[0].assigned).toEqual(["can", "cant"]);
   });
 

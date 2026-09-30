@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { LessonScreen } from "@/components/child/LessonScreen";
 import { S } from "@/config/strings";
 
-export const metadata = { title: `${S.child.lessons} · ${S.appName}` };
+export const metadata = { title: `${S.child.books} · ${S.appName}` };
 
 // The lesson id and step live in the query string (?id=can&step=practise), read on the client.
 export default function Page() {

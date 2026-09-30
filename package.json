@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "audio": "node --no-warnings scripts/generate-audio.mjs"
+    "audio": "node --no-warnings --env-file-if-exists=.env.local scripts/generate-audio.mjs"
   },
   "dependencies": {
     "@fontsource/lexend": "^5.3.0",

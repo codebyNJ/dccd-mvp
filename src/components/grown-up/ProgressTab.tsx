@@ -6,8 +6,8 @@ import { Avatar } from "@/components/Avatar";
 import { Icon } from "@/components/Icon";
 import { S } from "@/config/strings";
 import { positionBias, type BiasResult } from "@/lib/bias";
-import { delaySecondsFor, lessonStatus } from "@/lib/progress";
-import { defaultProgress, type Learner, type Lesson, type Session } from "@/lib/schema";
+import { lessonStatus } from "@/lib/progress";
+import { type Learner, type Lesson, type Session } from "@/lib/schema";
 import { plainSummary } from "@/lib/summary";
 import { useApp } from "@/store/app";
 
@@ -80,15 +80,14 @@ export function ProgressTab() {
         </button>
       </div>
 
-      <Report learner={learner} lesson={lesson} lessons={lessons} sessions={sessions} />
+      <Report learner={learner} lesson={lesson} sessions={sessions} />
     </>
   );
 }
 
-function Report({ learner, lesson, lessons, sessions }: { learner: Learner; lesson: Lesson; lessons: Lesson[]; sessions: Session[] }) {
+function Report({ learner, lesson, sessions }: { learner: Learner; lesson: Lesson; sessions: Session[] }) {
   const [now] = useState(() => Date.now());
-  const progress = learner.progress[lesson.id] ?? defaultProgress();
-  const status = lessonStatus(lesson, learner, lessons, now);
+  const status = lessonStatus(lesson, learner, now);
   const bias = positionBias(sessions.flatMap((s) => s.trials));
 
   return (
@@ -110,10 +109,6 @@ function Report({ learner, lesson, lessons, sessions }: { learner: Learner; less
         <dl className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3">
           <Stat label={P.status} value={S.child.status[status]} />
           <Stat label={P.sessions} value={String(sessions.length)} />
-          <Stat
-            label={P.delay}
-            value={learner.settings.strategy === "errorless" ? S.grownUp.learners.seconds(delaySecondsFor(progress.delayStep)) : S.grownUp.learners.strategies["least-to-most"]}
-          />
           <Stat label={S.grownUp.learners.mastery} value={`${learner.settings.masteryPercent}% × ${learner.settings.masterySessions}`} />
         </dl>
         <div>
@@ -272,7 +267,7 @@ function SessionsTable({ sessions }: { sessions: Session[] }) {
               return (
                 <tr key={s.id} className="border-t border-line">
                   <td className="py-2 pr-3">{fmtDateTime(s.startedAt)}</td>
-                  <td className="py-2 pr-3">{s.kind === "review" ? S.child.reviewTitle : s.completed ? "Lesson" : "Lesson (stopped)"}</td>
+                  <td className="py-2 pr-3">{s.kind === "review" ? "Review" : s.completed ? "Lesson" : "Lesson (stopped)"}</td>
                   <td className="py-2 pr-3">{pct === null ? "–" : `${sum.checkIndependentCorrect}/${sum.checkTotal} (${pct}%)`}</td>
                   <td className="py-2 pr-3 tabular-nums">{sum.promptCounts.join(" / ")}</td>
                   <td className="py-2 pr-3">{sum.meanLatencyMs === null ? "–" : `${(sum.meanLatencyMs / 1000).toFixed(1)} s`}</td>

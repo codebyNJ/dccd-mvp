@@ -21,7 +21,7 @@ export function otherCharacter(item: Item): CharacterId {
   return item.answer === item.optionA ? item.optionB : item.optionA;
 }
 
-export function instructionLine(item: Item, polarity: Polarity): string {
+export function instructionLine(item: Pick<Item, "verb">, polarity: Polarity): string {
   return `Who ${word(polarity)} ${item.verb}?`;
 }
 

@@ -31,19 +31,14 @@ export const LessonSchema = z.object({
 
 export const LearnerSettingsSchema = z.object({
   calmMode: z.boolean().default(true),
+  /** Playback rate: 0.8 slower, 1 normal, 1.2 faster (the recording itself is already slow). */
   voiceRate: z.number().min(0.7).max(1.2).default(1),
   textSize: z.enum(["regular", "large"]).default("regular"),
   voiceOn: z.boolean().default(true),
-  /** Watch step moves to the next slide on its own. Off by default. */
-  watchAutoplay: z.boolean().default(false),
   strategy: StrategySchema.default(TEACHING.defaultStrategy),
-  tokenBoardSize: z.union([z.literal(3), z.literal(5), z.literal(10)]).default(TEACHING.tokenBoardSize),
-  tokensForPrompted: z.boolean().default(TEACHING.tokensForPrompted),
   masteryPercent: z.union([z.literal(80), z.literal(90), z.literal(100)]).default(TEACHING.masteryPercent),
   masterySessions: z.int().min(1).max(3).default(TEACHING.masterySessions),
-  interTrialPauseMs: z.number().min(2000).max(3000).default(TEACHING.interTrialPauseMs),
   reviewIntervalDays: z.int().min(1).max(60).default(TEACHING.reviewIntervalDays),
-  canBeforeCant: z.boolean().default(TEACHING.canBeforeCant),
 });
 
 export const LessonProgressSchema = z.object({

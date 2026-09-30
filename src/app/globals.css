@@ -28,6 +28,13 @@
   --line: #c3d6e4;
   --focus: #1d5a80;
 
+  /* Storybook: warm paper on a soft desk, pages stacked underneath. */
+  --paper: #fffaf0;
+  --paper-edge: #eadfc8;
+  --desk: #f3ead9;
+  --shelf: #d9c29a;
+  --shelf-dark: #b89868;
+
   --radius-card: 24px;
   --radius-control: 20px;
   --radius-small: 12px;
@@ -66,6 +73,9 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-muted: var(--ink-muted);
   --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-paper-edge: var(--paper-edge);
+  --color-desk: var(--desk);
   --font-sans: var(--font-lexend), system-ui, sans-serif;
   --radius-card: var(--radius-card);
   --radius-control: var(--radius-control);
@@ -113,6 +123,7 @@ button:disabled {
   font-size: var(--child-text);
   line-height: 1.2;
   min-height: 100dvh;
+  background: var(--desk);
 }
 .child.text-large {
   --child-text: var(--child-text-lg);
@@ -144,48 +155,134 @@ button:disabled {
   flex: none;
 }
 
-/* The one lesson layout: identical on every step and every trial. */
-.lesson {
+/* A lesson is a book: a slim bar on top, then one page filling the screen. */
+.book-screen {
   height: 100dvh;
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: var(--gap);
   padding: max(8px, env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right))
-    max(8px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    "schedule schedule mute"
-    "break tokens tokens"
-    "prompt prompt prompt"
-    "cards cards cards"
-    "controls controls controls";
+    max(12px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
   max-width: 1480px;
   margin: 0 auto;
   overflow: hidden;
 }
-.lesson > .a-schedule { grid-area: schedule; min-width: 0; }
-.lesson > .a-mute { grid-area: mute; }
-.lesson > .a-break { grid-area: break; }
-.lesson > .a-tokens { grid-area: tokens; min-width: 0; }
-.lesson > .a-prompt { grid-area: prompt; min-width: 0; }
-.lesson > .a-cards { grid-area: cards; min-height: 0; min-width: 0; }
-.lesson > .a-controls { grid-area: controls; min-width: 0; }
-.lesson > .a-controls:empty { display: none; }
+.book-page {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  margin-right: 10px;
+  padding: clamp(12px, 2.4vw, 36px) clamp(12px, 2.4vw, 36px) clamp(8px, 1.2vw, 16px) clamp(20px, 3vw, 48px);
+  border-radius: 14px 28px 28px 14px;
+  /* The spine's shadow on the left, the pages stacked underneath on the right. */
+  background: linear-gradient(90deg, rgb(120 90 40 / 0.14), rgb(120 90 40 / 0) 28px), var(--paper);
+  box-shadow:
+    4px 4px 0 -1px var(--paper),
+    4px 4px 0 0 var(--paper-edge),
+    9px 8px 0 -1px var(--paper),
+    9px 8px 0 0 var(--paper-edge),
+    0 18px 40px rgb(80 60 20 / 0.12);
+}
+.book-title {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.page-corner {
+  border-radius: var(--radius-control) var(--radius-control) 28px var(--radius-control);
+}
 
-/* Short landscape phones: side columns so the cards keep their height. */
-@media (orientation: landscape) and (max-height: 560px) {
-  .lesson {
-    /* A narrow first column (Break under the schedule) leaves the width to the two cards. */
-    grid-template-columns: minmax(var(--tap-child), 22vw) minmax(0, 1fr) auto;
-    grid-template-rows: auto auto minmax(0, 1fr);
-    grid-template-areas:
-      "schedule tokens mute"
-      "break prompt prompt"
-      "break cards controls";
+/* A picture pasted into a book: white card, soft shadow. */
+.illustration {
+  object-fit: contain;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgb(80 60 20 / 0.14);
+}
+
+/* The bookshelf on the first page. */
+.reader-tile {
+  background: var(--paper);
+  border-color: var(--paper-edge);
+}
+.shelf {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 300px));
+  gap: clamp(16px, 3vw, 40px);
+  padding: 8px clamp(8px, 2vw, 24px) 18px;
+}
+.shelf::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(var(--shelf), var(--shelf-dark));
+  box-shadow: 0 8px 16px rgb(80 60 20 / 0.18);
+}
+.book-cover {
+  --cover: var(--blue-100);
+  --cover-spine: var(--blue-500);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 300px;
+  height: 100%;
+  padding: 36px 16px 16px 20px;
+  border-radius: 6px 18px 18px 6px;
+  border-left: 16px solid var(--cover-spine);
+  background: var(--cover);
+  color: var(--ink);
+  box-shadow: inset 8px 0 10px -6px rgb(0 0 0 / 0.18), 0 10px 24px rgb(80 60 20 / 0.18);
+}
+.book-cover[data-polarity="cant"] {
+  --cover: var(--coral-50);
+  --cover-spine: var(--coral-500);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .book-cover {
+    transition: transform 0.25s ease-out;
   }
-  .lesson > .a-schedule { align-self: center; }
-  .lesson > .a-break { align-self: start; }
-  .lesson > .a-controls { flex-direction: column; justify-content: flex-start; }
+  .book-cover:hover {
+    transform: translateY(-4px);
+  }
+}
+.ribbon {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 2px 12px 6px;
+  border-radius: 0 0 10px 10px;
+  background: var(--paper);
+  border: 2px solid var(--paper-edge);
+  border-top: 0;
+  font-size: 0.5em;
+  font-weight: 600;
+}
+.ribbon svg {
+  width: 1.1em;
+  height: 1.1em;
+  fill: var(--amber-400);
+  color: var(--amber-600);
+}
+
+/* Short landscape phones: the buttons move to a column on the left so the page keeps its height. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .book-screen {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .book-screen > nav,
+  .book-screen > nav > div {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 
 /* Small phones: slightly tighter targets so everything stays on one screen. */
@@ -206,6 +303,7 @@ button:disabled {
   margin: 0 auto;
 }
 
+/* Pictures pasted onto the page. */
 .char-card {
   position: relative;
   height: 100%;

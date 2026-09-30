@@ -29,13 +29,12 @@ interface Actions {
   addLearner: (nickname: string, avatar: AvatarId) => string;
   updateLearner: (id: string, patch: Partial<Pick<Learner, "nickname" | "avatar" | "assigned">>) => void;
   updateSettings: (id: string, patch: Partial<LearnerSettings>) => void;
-  resetDelay: (id: string, lessonId: string) => void;
   deleteLearner: (id: string) => void;
   setActiveLearner: (id: string | null) => void;
   setMuted: (muted: boolean) => void;
 
   updateItem: (lessonId: string, itemId: string, patch: Partial<Omit<Item, "id">>) => void;
-  addItem: (lessonId: string) => void;
+  addItem: (lessonId: string, item: Omit<Item, "id">) => void;
   deleteItem: (lessonId: string, itemId: string) => void;
   addItems: (lessonId: string, items: Omit<Item, "id">[]) => void;
   resetLesson: (lessonId: string) => void;
@@ -97,13 +96,6 @@ export const useApp = create<AppState>()(
       },
       updateLearner: (id, patch) => set((s) => mapLearner(s, id, (l) => ({ ...l, ...patch }))),
       updateSettings: (id, patch) => set((s) => mapLearner(s, id, (l) => ({ ...l, settings: { ...l.settings, ...patch } }))),
-      resetDelay: (id, lessonId) =>
-        set((s) =>
-          mapLearner(s, id, (l) => ({
-            ...l,
-            progress: { ...l.progress, [lessonId]: { ...(l.progress[lessonId] ?? defaultProgress()), delayStep: 0, delayGoodSessions: 0 } },
-          })),
-        ),
       deleteLearner: (id) =>
         set((s) => ({
           learners: s.learners.filter((l) => l.id !== id),
@@ -115,10 +107,7 @@ export const useApp = create<AppState>()(
 
       updateItem: (lessonId, itemId, patch) =>
         set((s) => mapItems(s, lessonId, (items) => items.map((i) => (i.id === itemId ? fixAnswer({ ...i, ...patch }) : i)))),
-      addItem: (lessonId) =>
-        set((s) =>
-          mapItems(s, lessonId, (items) => [...items, { id: newItemId(), verb: "", optionA: "dog", optionB: "cat", answer: "cat", status: "draft" }]),
-        ),
+      addItem: (lessonId, item) => set((s) => mapItems(s, lessonId, (items) => [...items, fixAnswer({ ...item, id: newItemId() })])),
       deleteItem: (lessonId, itemId) => set((s) => mapItems(s, lessonId, (items) => items.filter((i) => i.id !== itemId))),
       addItems: (lessonId, rows) => set((s) => mapItems(s, lessonId, (items) => [...items, ...rows.map((r) => ({ ...r, id: newItemId() }))])),
       resetLesson: (lessonId) => set((s) => mapItems(s, lessonId, () => deckItems())),
